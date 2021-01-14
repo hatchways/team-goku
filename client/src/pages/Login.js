@@ -1,65 +1,101 @@
 import React, { useState } from "react";
 
-import Input from '@material-ui/core/Input';
-import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
 
-function Login() {
+import { TextField, Button, InputLabel, Grid, Hidden } from "@material-ui/core";
+import { validateEmail, validatePassword } from "../Validation";
 
-    const [validationState, setValidationState] = useState(false);
+import image from '../images/0b74a39fcb811ed6c86f3bd4359962d5f5a4bc03.png'
 
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const useStyles = makeStyles({
+    root: {
+        minHeight: '100vh'
+    },
+    // Might need to change for deployment
+    bg: {
+        backgroundImage: `url(${image})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundPosition: 'center',
+        backgroundSize: '100% 100%'
+    }
+});
 
-    function validateEmail(email) {
-        return re.test(String(email));
+function Login(props) {
+
+    const [email, setEmail] = useState("");
+    const [validEmail, setValidEmail] = useState(true);
+    const [password, setPassword] = useState("");
+    const [validPassword, setValidPassword] = useState(true);
+
+
+    const handleEmailInput = event => {
+        setEmail(event.target.value);
     }
 
-    const handleInput = event => {
-        if (validateEmail(event.target.value)) {
-            setValidationState(true);
-        }
-        else {
-            setValidationState(false);
-        }
-    };
+    const handlePasswordInput = event => {
+        setPassword(event.target.value);
+    }
 
+    const handleSubmit = event => {
+        event.preventDefault();
+        setValidEmail(validateEmail(email));
+        setValidPassword(validatePassword(password));
+    }
+
+
+    const classes = useStyles();
     return (
-        <div>
-            Login
-            <form>
-                <label for="email-input">EMAIL</label>
-                {/* <Input
-                    onChange={handleInput}
-                    required="true"
-                    type="email"
-                    id="email-input"
-                />
-                <label for="password-input">PASSWORD</label>
-                <Input
-                    id="password-input"
-                    type="password"
-                    minLength="6"
-                /> */}
-                <input
-                    onChange={handleInput}
-                    required="true"
-                    type="email"
-                    id="email-input"
-                />
-                <label for="password-input">PASSWORD</label>
-                <input
-                    id="password-input"
-                    type="password"
-                    minLength="6"
-                />
-                <Button>
-                    SIGN IN
-                </Button>
-            </form>
-            <div>
-                Is email valid? {validationState.toString()}
-            </div>
-        </div>
+        <Grid container spaceing={3} className={classes.root}>
+            <Grid item xs container
+                direction="row"
+                justify="space-around"
+                alignItems="center"
+            >
+                <form noValidate autoComplete="off" onSubmit={handleSubmit}>
+                    Login
+                    <InputLabel htmlFor="email-input">
+                        EMAIL
+                    </InputLabel>
+                    <TextField
+                        id="email-input"
+                        name="email"
+                        required
+                        variant="outlined"
+                        onChange={handleEmailInput}
+                        error={!validEmail}
+                        helperText={validEmail === false ? 'Please enter an email address.' : ''}
 
+                    />
+                    <InputLabel htmlFor="password-input">
+                        PASSWORD
+                    </InputLabel>
+                    <TextField
+                        id="password-input"
+                        name="password"
+                        required
+                        type="password"
+                        variant="outlined"
+                        onChange={handlePasswordInput}
+                        error={!validPassword}
+                        helperText={validPassword === false ? 'Password should be at least 6 characters.' : ''}
+                    />
+                    <div>
+                        <Button type="submit">
+                            SIGN IN
+                        </Button>
+                    </div>
+                </form>
+            </Grid>
+            <Hidden smDown>
+                <Grid item xs container
+                    direction="row"
+                    justify="space-around"
+                    alignItems="center"
+                    className={classes.bg}
+                >
+                </Grid>
+            </Hidden>
+        </Grid>
     );
 }
 

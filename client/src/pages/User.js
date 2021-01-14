@@ -13,9 +13,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
 
+import Profile from "./Profile";
+
 const useStyles = makeStyles(({
   root: {
-    background: "#6e6e6e",
+    background: "#F8F8FF",
     height: "100vh",
     flexGrow: 1,
   },
@@ -23,44 +25,18 @@ const useStyles = makeStyles(({
     flexGrow: 1,
   },
   navbar: {
-    background: "#000000"
+    background: "#FFFFFF"
   },
-  placeholder_one: {
-    background: '#F8F8FF',
-    border: 1,
-    borderRadius: 3,
-    boxShadow: '3px 5px #888888',
-    color: 'white',
-    height: 300,
-    width: 300,
-    padding: '100px 100px',
-    margin: '25px 50px 75px 75px',
-    textAlign: 'center',
-    float: 'left',
-  },
-  placeholder_two: {
-    background: '#F8F8FF',
-    border: 1,
-    borderRadius: 3,
-    boxShadow: '3px 5px #888888',
-    color: 'white',
-    height: 300,
-    width: 300,
-    padding: '100px 100px',
-    margin: '25px 50px 75px 75px',
-    textAlign: 'center',
-    float: 'right',
-  },
-  itemButton: {
-    background: '#FF743D',
-  },
-
+  menu: {
+    background: "#F8F8FF",
+  }
 }));
 
 export default function MenuAppBar() {
   const classes = useStyles();
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [user_info, setUserInfo] = React.useState({ user_email: "email@email.com", user_type: "chef" })
   const open = Boolean(anchorEl);
 
   const handleChange = (event) => {
@@ -77,15 +53,12 @@ export default function MenuAppBar() {
 
   return (
     <div className={classes.root}>
-      <div className={classes.navbar}>
-        <AppBar position="static">
+      <div>
+        <AppBar position="relative" className={classes.navbar}>
           <Toolbar>
             <Typography variant="h6" className={classes.title}>
               CHEF'S MENU
             </Typography>
-            <Button color="inherit">Link 1</Button>
-            <Button color="inherit">Link 2</Button>
-            <Button color="inherit">Link 3</Button>
             {auth && (
               <div>
                 <IconButton
@@ -120,13 +93,9 @@ export default function MenuAppBar() {
             )}
           </Toolbar>
         </AppBar>
+        <Profile />
       </div>
-      <div className={classes.placeholder_one}>
-      <Button className={classes.itemButton}>Placeholder</Button>
-      </div>
-      <div className={classes.placeholder_two}>
-      <Button className={classes.itemButton}>Placeholder</Button>
-      </div>
+
     </div>
   );
 }

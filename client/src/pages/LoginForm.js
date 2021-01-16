@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useState } from "react";
 import { Button, Box } from "@material-ui/core";
 import { validateEmail, validatePassword } from "../Validation";
 import { LoginComponent, PasswordComponent} from "../LoginSignupComponents";
+import { themes } from "../themes/LoginSignupThemes";
 
 function LoginForm(props) {
     const [email, setEmail] = useState("");
@@ -30,10 +30,14 @@ function LoginForm(props) {
         }
     }
 
+    const classes = themes();
+
     return(
         <Box>
             <form noValidate onSubmit={handleLoginSubmit}>
-                Loginss
+                <Box className={classes.formTitle}>
+                    Login
+                </Box>
                 <LoginComponent 
                     onChange={handleEmailInput}
                     error={!validEmail}
@@ -44,7 +48,7 @@ function LoginForm(props) {
                     error={!validPassword}
                     helperText={validPassword === false ? "Password should be at least 6 characters." : ""}
                 />
-                <Button type="submit">
+                <Button className={classes.primary} type="submit">
                         Sign In
                 </Button>
             </form>

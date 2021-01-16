@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useState } from "react";
 import { Button, Box } from "@material-ui/core";
 import { validateEmail, validatePassword } from "../Validation";
 import { LoginComponent, PasswordComponent, NameComponent } from "../LoginSignupComponents";
+import { themes } from "../themes/LoginSignupThemes";
 
 function SignupForm(props) {
     const [email, setEmail] = useState("");
@@ -38,11 +38,13 @@ function SignupForm(props) {
         }
     }
 
-
+    const classes = themes();
     return(
         <Box>
             <form noValidate onSubmit={handleSignupSubmit}>
-                Create an account
+                <Box className={classes.formTitle}>
+                    Create an account
+                </Box>
                 <NameComponent
                     onChange={handleNameInput}
                     error={!validName}
@@ -61,7 +63,7 @@ function SignupForm(props) {
                     helperText={validPassword ? "" : "Password should be at least 6 characters."}
                     placeholder='Enter your password'
                 />
-                <Button type="submit">
+                <Button className={classes.primary} type="submit">
                         Sign Up
                 </Button>
             </form>

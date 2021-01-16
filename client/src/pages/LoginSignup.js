@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Hidden, Box } from "@material-ui/core";
-import { validateEmail, validatePassword } from "../Validation";
-import { LoginRedirectButton, SignupRedirectButton } from "../LoginSignupComponents";
+import { RedirectButton } from "../LoginSignupComponents";
 import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
+import { themes } from "../themes/LoginSignupThemes";
 
 import { Route, Switch } from "react-router-dom";
 
@@ -28,15 +28,16 @@ const useStyles = makeStyles({
 function LoginSignup() {
 
     const classes = useStyles();
+    const theme = themes();
     return (
         <Box>
             <Hidden smUp>
                 <Switch>
                     <Route path="/signup">
-                        <LoginRedirectButton/>
+                        <RedirectButton text="Already a member?" buttonText="Log In" href="/login"/>
                     </Route>
                     <Route path="/login">
-                        <SignupRedirectButton />
+                        <RedirectButton text="Don't have an account?" buttonText="Sign Up" href="/signup"/>
                     </Route>
                 </Switch>
             </Hidden>
@@ -59,10 +60,10 @@ function LoginSignup() {
                     <Grid item xs className={classes.bg}>
                         <Switch>
                             <Route path="/signup">
-                                <LoginRedirectButton/>
+                                <RedirectButton className={theme.redirectAlt} text="Already a member?" buttonText="Log In" href="/login"/>
                             </Route>
                             <Route path="/login">
-                                <SignupRedirectButton />
+                                <RedirectButton className={theme.redirectAlt} text="Don't have an account?" buttonText="Sign Up" href="/signup"/>
                             </Route>
                         </Switch>
                     </Grid>

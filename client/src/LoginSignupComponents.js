@@ -1,36 +1,17 @@
 import React from "react";
-import { makeStyles } from '@material-ui/core/styles';
 import { Button, TextField, InputLabel, Box } from "@material-ui/core";
+import { themes } from "./themes/LoginSignupThemes";
 
-const useStyles = makeStyles({
-    root: {
-    },
-});
-
-function SignupRedirectButton() {
+function RedirectButton(props) {
+    const classes = themes();
     return (
-        <Box
+        <Box className={props.className}
             display="flex"
             justifyContent="flex-end"
             alignItems="baseline">
-            Don't have an account?
-            <Button href="/signup">
-                SIGN UP
-            </Button>
-        </Box>
-    )
-}
-
-
-function LoginRedirectButton() {
-    return (
-        <Box
-            display="flex"
-            justifyContent="flex-end"
-            alignItems="baseline">
-            Already a member?
-            <Button href="/login">
-                LOGIN
+            <span className={classes.redirectTextMargin}>{props.text}</span>
+            <Button className={classes.primary} href={props.href}>
+                {props.buttonText}
             </Button>
         </Box>
     )
@@ -44,9 +25,10 @@ function LoginComponent(props) {
           }
     }
 
+    const classes = themes();
     return (
         <Box>
-            <InputLabel htmlFor="email-input">
+            <InputLabel className={classes.formLabel} htmlFor="email-input">
                 EMAIL
             </InputLabel>
             <TextField
@@ -72,9 +54,10 @@ function PasswordComponent(props) {
           }
     }
 
+    const classes = themes();
     return(
         <Box>
-            <InputLabel htmlFor="password-input">
+            <InputLabel className={classes.formLabel} htmlFor="password-input">
                 PASSWORD
             </InputLabel>
             <TextField
@@ -99,9 +82,10 @@ function NameComponent(props) {
           }
     }
 
+    const classes = themes();
     return(
         <Box>
-            <InputLabel htmlFor="name-input">
+            <InputLabel className={classes.formLabel} htmlFor="name-input">
                 NAME
             </InputLabel>
             <TextField
@@ -120,4 +104,4 @@ function NameComponent(props) {
 
 
 
-export {LoginRedirectButton, SignupRedirectButton, LoginComponent, PasswordComponent, NameComponent};
+export { RedirectButton, LoginComponent, PasswordComponent, NameComponent};

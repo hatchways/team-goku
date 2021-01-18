@@ -93,7 +93,7 @@ export default function MenuAppBar() {
             )}
           </Toolbar>
         </AppBar>
-        <Profile />
+
       </div>
 
     </div>

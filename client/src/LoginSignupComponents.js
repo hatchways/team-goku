@@ -1,21 +1,29 @@
 import React from "react";
-import { Button, TextField, InputLabel, Box } from "@material-ui/core";
-import { themes } from "./themes/LoginSignupThemes";
+import { Button, TextField, InputLabel, Grid } from "@material-ui/core";
+import { makeStyles } from '@material-ui/core/styles';
 
-function RedirectButton(props) {
-    const classes = themes();
-    return (
-        <Box className={props.className}
-            display="flex"
-            justifyContent="flex-end"
-            alignItems="baseline">
-            <span className={classes.redirectTextMargin}>{props.text}</span>
-            <Button className={classes.primary} href={props.href}>
-                {props.buttonText}
-            </Button>
-        </Box>
-    )
-}
+const themes = makeStyles({
+    primaryButton: {
+        fontSize: "1em",
+        backgroundColor: "#FF743D",
+        color: "#fff",
+        textTransform: "none",
+        padding: "1em 3em 1em 3em",
+        margin: "1em 0 1em 0",
+        borderRadius: "0 0 0 0",
+        '&:hover': {
+            backgroundColor: '#AD6800'
+          },
+    },
+    formLabel: {
+        color: "#000",
+        fontWeight: "bold",
+        margin: "1em 0 0.5em 0",
+    },
+    input: {
+        width: "15em",
+    }
+});
 
 function LoginComponent(props) {
 
@@ -27,7 +35,7 @@ function LoginComponent(props) {
 
     const classes = themes();
     return (
-        <Box>
+        <Grid>
             <InputLabel className={classes.formLabel} htmlFor="email-input">
                 EMAIL
             </InputLabel>
@@ -41,8 +49,9 @@ function LoginComponent(props) {
                 error={props.error}
                 helperText={props.helperText}
                 placeholder={props.placeholder}
+                className={classes.input}
             />
-        </Box>
+        </Grid>
     )
 }
 
@@ -56,7 +65,7 @@ function PasswordComponent(props) {
 
     const classes = themes();
     return(
-        <Box>
+        <Grid>
             <InputLabel className={classes.formLabel} htmlFor="password-input">
                 PASSWORD
             </InputLabel>
@@ -70,8 +79,9 @@ function PasswordComponent(props) {
                 error={props.error}
                 helperText={props.helperText}
                 placeholder={props.placeholder}
+                className={classes.input}
             />
-        </Box>
+        </Grid>
     )
 }
 
@@ -84,7 +94,7 @@ function NameComponent(props) {
 
     const classes = themes();
     return(
-        <Box>
+        <Grid>
             <InputLabel className={classes.formLabel} htmlFor="name-input">
                 NAME
             </InputLabel>
@@ -97,11 +107,12 @@ function NameComponent(props) {
                 error={props.error}
                 helperText={props.helperText}
                 placeholder={props.placeholder}
+                className={classes.input}
             />
-        </Box>
+        </Grid>
     )
 }
 
 
 
-export { RedirectButton, LoginComponent, PasswordComponent, NameComponent};
+export { LoginComponent, PasswordComponent, NameComponent};

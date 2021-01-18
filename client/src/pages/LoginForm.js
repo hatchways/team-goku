@@ -1,8 +1,27 @@
 import React, { useState } from "react";
-import { Button, Box } from "@material-ui/core";
+import { Grid, Button } from "@material-ui/core";
 import { validateEmail, validatePassword } from "../Validation";
-import { LoginComponent, PasswordComponent} from "../LoginSignupComponents";
-import { themes } from "../themes/LoginSignupThemes";
+import { LoginComponent, PasswordComponent } from "../LoginSignupComponents";
+import { makeStyles } from '@material-ui/core/styles';
+
+const themes = makeStyles({
+    primaryButton: {
+        fontSize: "1em",
+        backgroundColor: "#FF743D",
+        color: "#fff",
+        textTransform: "none",
+        padding: "1em 3em 1em 3em",
+        margin: "1em 0 1em 0",
+        borderRadius: "0 0 0 0",
+        '&:hover': {
+            backgroundColor: '#AD6800'
+        },
+    },
+    formTitle: {
+        fontSize: "2em",
+        margin: "1em 0 1em 0",
+    },
+});
 
 function LoginForm(props) {
     const [email, setEmail] = useState("");
@@ -31,28 +50,36 @@ function LoginForm(props) {
     }
 
     const classes = themes();
-
-    return(
-        <Box>
+    return (
+        <Grid container
+            direction="column"
+            justify="center"
+            alignItems="center"
+        >
             <form noValidate onSubmit={handleLoginSubmit}>
-                <Box className={classes.formTitle}>
-                    Login
-                </Box>
-                <LoginComponent 
-                    onChange={handleEmailInput}
-                    error={!validEmail}
-                    helperText={validEmail === false ? "Please enter an email address." : ""}
-                />
-                <PasswordComponent
-                    onChange={handlePasswordInput}
-                    error={!validPassword}
-                    helperText={validPassword === false ? "Password should be at least 6 characters." : ""}
-                />
-                <Button className={classes.primary} type="submit">
-                        Sign In
-                </Button>
+                <Grid>
+                    <h1 className={classes.formTitle}>Login</h1>
+                </Grid>
+                <Grid>
+                    <LoginComponent
+                        onChange={handleEmailInput}
+                        error={!validEmail}
+                        helperText={validEmail === false ? "Please enter an email address." : ""}
+                    />
+                </Grid>
+                <Grid>
+                    <PasswordComponent
+                        onChange={handlePasswordInput}
+                        error={!validPassword}
+                        helperText={validPassword === false ? "Password should be at least 6 characters." : ""}
+                    />
+                </Grid>
+                <Grid item>
+                    <Button className={classes.primaryButton} type="submit">Login</Button>
+                </Grid>
+
             </form>
-        </Box>
+        </Grid>
     )
 }
 

@@ -7,6 +7,7 @@ import SignupForm from "./SignupForm";
 import { Route, Switch } from "react-router-dom";
 
 import image from "../images/ddb3f7c7b2544f7f1c636f0270f032276c911f02.png"
+import logo from "../images/logo.png"
 
 const useStyles = makeStyles({
     root: {
@@ -34,6 +35,13 @@ const useStyles = makeStyles({
     },
     redirectAltColorText: {
         color: "#fff",
+    },
+    logoGrid: {
+        margin: "50px 0 80px 0"
+    },
+    logo: {
+        maxWidth: "75%",
+        height: "auto"
     }
 });
 
@@ -86,18 +94,28 @@ function LoginSignup() {
             <Grid container className={classes.root}>
                 <Grid item xs
                     container
-                    direction="row"
-                    justify="center"
+                    direction="column"
+                    justify="flex-start"
                     alignItems="center"
                 >
-                    <Switch>
-                        <Route path="/login">
-                            <LoginForm />
-                        </Route>
-                        <Route path="/signup">
-                            <SignupForm />
-                        </Route>
-                    </Switch>
+                    <Grid item className={classes.logoGrid}> 
+                        <img className={classes.logo} src={logo}/>
+                    </Grid>
+                    <Grid 
+                        container
+                        direction="column"
+                        justify="center"
+                        alignItems="center"
+                    >
+                        <Switch>
+                            <Route path="/login">
+                                <LoginForm />
+                            </Route>
+                            <Route path="/signup">
+                                <SignupForm />
+                            </Route>
+                        </Switch>
+                    </Grid>
                 </Grid>
                 <Hidden xsDown>
                     <Grid item xs className={classes.bg}>

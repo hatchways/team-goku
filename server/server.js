@@ -3,11 +3,14 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 
+const usersRouter = require('./routes/users.js');
+const recipeRouter = require('./routes/recipes.js');
+
 
 require('dotenv').config();
 
 const app = express();
-const port = 5000 || process.env.PORT 
+const port = 5000 || process.env.PORT
 
 app.use(cors());
 app.use(express.json());
@@ -22,10 +25,8 @@ connection.once('open', () => {
 	console.log('MongoDB database connection extablished successfully');
 });
 
-
-const usersRouter = require('./routes/users.js');
-
 app.use('/users', usersRouter);
+app.use('/recipes', recipeRouter);
 
 app.listen(port, () => {
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Grid, Button } from "@material-ui/core";
 import { validateEmail, validatePassword } from "../Validation";
-import { LoginComponent, PasswordComponent } from "../LoginSignupComponents";
+import { LoginComponent, PasswordComponent } from "./LoginSignupComponents";
 import { makeStyles } from '@material-ui/core/styles';
 
 const themes = makeStyles({

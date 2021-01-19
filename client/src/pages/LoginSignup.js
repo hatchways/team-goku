@@ -6,6 +6,7 @@ import SignupForm from "./SignupForm";
 
 import { Route, Switch } from "react-router-dom";
 
+/* Might need to change url for deployment */
 import image from "../images/ddb3f7c7b2544f7f1c636f0270f032276c911f02.png"
 import logo from "../images/logo.png"
 
@@ -14,7 +15,6 @@ const useStyles = makeStyles({
         minHeight: "100vh"
     },
     bg: {
-        // Might need to change url for deployment
         backgroundImage: `url(${image})`,
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",

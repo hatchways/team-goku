@@ -3,7 +3,6 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 
-
 require('dotenv').config();
 
 const app = express();
@@ -22,11 +21,9 @@ connection.once('open', () => {
 	console.log('MongoDB database connection extablished successfully');
 });
 
-
 const usersRouter = require('./routes/users.js');
 
 app.use('/users', usersRouter);
-
 app.listen(port, () => {
 
 	console.log(`Server is running on port ${port}`);

@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 
 let Recipe = require('../models/recipe.js')
 
+router.route('/').get((req, res) => {
+  return res.send('test');
+});
+
 //Create Recipe
 router.route('/new_recipe').post((req, res) => {
 
@@ -10,7 +14,6 @@ router.route('/new_recipe').post((req, res) => {
 	const name = req.body.name;
 	const ingredients = req.body.ingredients;
 	const description = req.body.description;
-  const chef_id = req.body.chef;
   const price = req.body.price;
 
 
@@ -24,15 +27,15 @@ router.route('/new_recipe').post((req, res) => {
   if(description.length == 0){
     res.send("Recipe must have a description");
   }
-  if(chef_id.length == 0){
+  /*if(chef_id.length == 0){
 		res.send("Must include chef_id");
-	}
+	}*/
   if(price.length == 0){
     res.send("Recipe must have a price");
   }
 
 	//Creates recipe
-	const newRecipe = new Recipe( {_id, name, ingredients, description} );
+	const newRecipe = new Recipe( {_id, name, ingredients, description, price} );
 
 	 //Saves recipe
 	 newRecipe.save()
@@ -52,6 +55,7 @@ router.route('/get_recipe/:id').get((req, res) => {
 
 //Delete Recipe by id
 router.route('/delete_recipe/:id').get((req, res) => {
+  console.log('Request body' + req.body);
 	const _id = req.params.id;
 	Recipe.findByIdAndDelete( _id, (err, result) => {
     if(err) {return res.send(err)};
@@ -61,7 +65,10 @@ router.route('/delete_recipe/:id').get((req, res) => {
 
 //Update Recipe
 router.route('/update_recipe/:id').post((req, res) => {
-	Recipe.findByIdAndUpdate( req.params.id, req.body, (err, result) => {
+  const _id = req.params.id;
+  console.log('Request body' + req.body);
+	Recipe.findByIdAndUpdate( _id, req.body, { 'new': true })
+    .exec((err, result) => {
     if(err) {return res.send(err)};
     return res.send(result)
   });

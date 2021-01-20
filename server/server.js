@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 const usersRouter = require('./routes/users.js');
 const recipeRouter = require('./routes/recipes.js');
 
-
 require('dotenv').config();
 
 const app = express();
@@ -21,7 +20,6 @@ mongoose.connect(uri, { useNewUrlParser:true, useCreateIndex: true });
 
 const connection = mongoose.connection;
 connection.once('open', () => {
-
 	console.log('MongoDB database connection established successfully');
 });
 

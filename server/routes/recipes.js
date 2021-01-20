@@ -10,37 +10,37 @@ router.route('/').get((req, res) => {
 //Create Recipe
 router.route('/new_recipe').post((req, res) => {
 
-	const _id = new mongoose.Types.ObjectId;
-	const name = req.body.name;
-	const ingredients = req.body.ingredients;
-	const description = req.body.description;
+  const _id = new mongoose.Types.ObjectId;
+  const name = req.body.name;
+  const ingredients = req.body.ingredients;
+  const description = req.body.description;
   const price = req.body.price;
 
 
-	//Checks for
-	if(name.length == 0){
-		res.send("Recipe must have a name");
-	}
-	if(ingredients.length == 0){
-		res.send("Must list ingredients")
-	}
+  //Checks for
+  if(name.length == 0){
+  	res.send("Recipe must have a name");
+  }
+  if(ingredients.length == 0){
+  	res.send("Must list ingredients")
+  }
   if(description.length == 0){
     res.send("Recipe must have a description");
   }
   /*if(chef_id.length == 0){
-		res.send("Must include chef_id");
-	}*/
+  	res.send("Must include chef_id");
+  }*/
   if(price.length == 0){
     res.send("Recipe must have a price");
   }
 
-	//Creates recipe
-	const newRecipe = new Recipe( {_id, name, ingredients, description, price} );
+  //Creates recipe
+  const newRecipe = new Recipe( {_id, name, ingredients, description, price} );
 
-	 //Saves recipe
-	 newRecipe.save()
-	.then( () => res.status(201).json('Recipe Created'))
-	.catch(err => res.status(400).json('Error: '+ err));
+   //Saves recipe
+   newRecipe.save()
+  .then( () => res.status(201).json('Recipe Created'))
+  .catch(err => res.status(400).json('Error: '+ err));
 
 });
 

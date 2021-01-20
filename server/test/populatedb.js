@@ -17,7 +17,7 @@ var Recipe = require ('../models/recipe.js');
 
 
 var mongoose = require('mongoose');
-var mongoDB = 'mongodb+srv://teamgoku:12345@cluster0.czhfm.mongodb.net/chefdb?retryWrites=true&w=majority';
+var mongoDB = userArgs[0];
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;

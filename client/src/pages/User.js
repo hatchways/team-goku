@@ -54,7 +54,7 @@ export default function MenuAppBar() {
   return (
     <div className={classes.root}>
       <div>
-        <AppBar position="relative" className={classes.navbar}>
+        <AppBar position="fixed" className={classes.navbar}>
           <Toolbar>
             <Typography variant="h6" className={classes.title}>
               CHEF'S MENU
@@ -93,7 +93,7 @@ export default function MenuAppBar() {
             )}
           </Toolbar>
         </AppBar>
-
+        <Profile />
       </div>
 
     </div>

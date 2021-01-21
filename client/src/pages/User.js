@@ -7,6 +7,9 @@ import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Box from '@material-ui/core/Box';
+
+import logo from '../images/logo.png';
 
 
 const useStyles = makeStyles(({
@@ -17,12 +20,16 @@ const useStyles = makeStyles(({
   },
   title: {
     flexGrow: 1,
+    marginLeft: '10px'
   },
   navbar: {
     background: "#FFFFFF"
   },
   menu: {
     background: "#F8F8FF",
+  },
+  accountButton: {
+    float: 'right'
   }
 }));
 
@@ -48,10 +55,13 @@ export default function MenuAppBar() {
   return (
     <div className={classes.root}>
       <div>
-        <AppBar position="relative" className={classes.navbar}>
+        <AppBar position="fixed" className={classes.navbar}>
           <Toolbar>
-            <Typography variant="h6" className={classes.title}>
-              CHEF'S MENU
+            <img src={logo} />
+            <Typography component="div" className={classes.title}>
+              <Box letterSpacing={6} m={1}>
+                  CHEF'S MENU
+              </Box>
             </Typography>
             {auth && (
               <div>
@@ -87,7 +97,7 @@ export default function MenuAppBar() {
             )}
           </Toolbar>
         </AppBar>
-
+        <Profile />
       </div>
 
     </div>

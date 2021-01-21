@@ -13,7 +13,7 @@ let User = require('../models/user');
 function verifyToken(req, res, next) {
 
   // Get auth header value
-  const bearerHeader = req.headers['authorization']; 
+  const bearerHeader = req.headers['authorization'];
 
   // Check if bearer is undefined
   if(typeof bearerHeader !== 'undefined'){
@@ -35,7 +35,7 @@ function verifyToken(req, res, next) {
   	res.sendStatus(403);
   }//else
 
-  
+
 }//verifyToken
 
 
@@ -53,7 +53,7 @@ router.route('/').get(verifyToken, (req, res) => {
 		else{
 
 			//If token is successfully verified
-			 
+
 			 res.send("Welcome to the HOME PAGE")
 
 		}//else
@@ -96,7 +96,7 @@ router.route('/register').post((req, res) => {
 	 //REGISTER NEW USER
 	 newUser.save()
 	.then( () => res.status(201).json('User Created'))
-	.catch(err => res.status(400).json('Error: '+ err));	
+	.catch(err => res.status(400).json('Error: '+ err));
 
 });
 
@@ -104,7 +104,7 @@ router.route('/register').post((req, res) => {
 //LOGIN
 router.route('/login').post((req, res) => {
 
-	
+
 	const email = req.body.email;
 
 	//VALIDATE USER
@@ -120,10 +120,10 @@ router.route('/login').post((req, res) => {
 		if(err){
 
 			res.send(err);
-		}//if 
-			
-		//Check password	
-		if(bcrypt.compareSync(req.body.password, data[0]['password'])) 
+		}//if
+
+		//Check password
+		if(bcrypt.compareSync(req.body.password, data[0]['password']))
 		{
 			// PASSWORDS MATCH
 
@@ -133,17 +133,17 @@ router.route('/login').post((req, res) => {
 
 	        res.json({ accessToken : accessToken });
 		}//if
-		else 
+		else
 		{
-			// PASSWORDS DON'T MATCH 
+			// PASSWORDS DON'T MATCH
 			res.send("Password don't match");
 		}//else
-		
-		
+
+
 	});
 
 });
 
- 
 
-module.exports = router; 
+
+module.exports = router;

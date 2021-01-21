@@ -7,9 +7,11 @@ const recipeSchema = new Schema({
 	name: { type: String, required: true },
 	ingredients: { type: String, required: true },
 	description: { type: String, required: true },
+	price: { type: Number, required: true },
 	chef: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-	serving_size: { type: String, required: true },
-	price: { type: String, required: true },
+	servingSize: { type: String, required: true },
+	requiredStuff: { type: String, required: true },
+	imgUrl: { type: String },
 
 });
 

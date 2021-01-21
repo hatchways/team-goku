@@ -28,15 +28,16 @@ var users=[];
 var recipes=[];
 
 
-function userCreate(name, email, password, isChef, about_me, fav_recipes, chef_recipes, cb) {
+function userCreate(name, email, password, isChef, location, aboutMe, favRecipes, chefRecipes, cb) {
   userDetails = {
     name: name,
     email: email,
     password: password,
     isChef: isChef,
-    about_me: about_me,
-    fav_recipes: fav_recipes,
-    chef_recipes: chef_recipes
+    location: location,
+    aboutMe: aboutMe,
+    favRecipes: favRecipes,
+    chefRecipes: chefRecipes
   }
 
   var user = new User(userDetails);
@@ -52,14 +53,16 @@ function userCreate(name, email, password, isChef, about_me, fav_recipes, chef_r
   }  );
 }
 
-function recipeCreate(name, ingredients,description, chef, serving_size, price, cb) {
+function recipeCreate(name, ingredients, description, price, chef, servingSize, requiredStuff, imgUrl, cb) {
   recipeDetails = {
     name: name,
     ingredients: ingredients,
     description: description,
-    chef: chef,
-    serving_size: serving_size,
     price: price,
+    chef: chef,
+    servingSize: servingSize,
+    requiredStuff: requiredStuff,
+    imgUrl: imgUrl
   }
 
   var recipe = new Recipe(recipeDetails);

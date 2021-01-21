@@ -8,13 +8,17 @@ router.route('/').get((req, res) => {
 });
 
 //Create Recipe
-router.route('/new_recipe').post((req, res) => {
+router.route('/').post((req, res) => {
 
   const _id = new mongoose.Types.ObjectId;
   const name = req.body.name;
   const ingredients = req.body.ingredients;
   const description = req.body.description;
   const price = req.body.price;
+  const chef = req.body.chef;
+  const servingSize = req.body.servingSize;
+  const requiredStuff = req.body.requiredStuff;
+  const imgUrl = req.body.imgUrl;
 
 
   //Checks for
@@ -32,7 +36,7 @@ router.route('/new_recipe').post((req, res) => {
   }
 
   //Creates recipe
-  const newRecipe = new Recipe( {_id, name, ingredients, description, price} );
+  const newRecipe = new Recipe( {_id, name, ingredients, description, price, chef, servingSize, requiredStuff, imgUrl} );
 
    //Saves recipe
    newRecipe.save()
@@ -51,7 +55,7 @@ router.route('/:id').get((req, res) => {
 });
 
 //Delete Recipe by id
-router.route('/:id').delete((req, res) => {
+router.route('/').delete((req, res) => {
   console.log('Request body' + req.body);
 	const _id = req.body.id;
 	Recipe.findByIdAndDelete( _id, (err, result) => {

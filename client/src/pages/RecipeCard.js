@@ -3,11 +3,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import SkipPreviousIcon from '@material-ui/icons/SkipPrevious';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
+
 
 import sushi1 from '../images/sushi1.png';
 
@@ -17,7 +14,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     width: '100%',
     borderRadius: 0,
-    padding: '50px 50px 50px 10px'
+    padding: '30px 30px 30px 10px'
   },
   details: {
     display: 'flex',
@@ -39,6 +36,13 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
+  servingSize: {
+      ...theme.typography.button,
+      backgroundColor: '#FF743D',
+      color: 'white',
+      padding: theme.spacing(1),
+      marginBottom: '2%'
+  },
 }));
 
 export default function MediaControlCard() {
@@ -49,11 +53,24 @@ export default function MediaControlCard() {
     <Card className={classes.root}>
       <div className={classes.details}>
         <CardContent className={classes.content}>
-          <Typography component="h5" variant="h5">
+          <div className={classes.servingSize}>{"FAMILY STYLE DINNER FOR 4."}</div>
+          <Typography component="h5" variant="h4">
             4 Special Rolls
           </Typography>
-          <Typography variant="subtitle1" color="textSecondary">
-            Mac Miller
+          <Typography variant="subtitle1">
+            $15.00
+          </Typography>
+          <Typography component="h6" variant="h6">
+            Ingredients:
+          </Typography>
+          <Typography component="h5" variant="body1">
+            Rice, Nori, Crab, Avacado, Cucumber
+          </Typography>
+          <Typography component="h5" variant="h6">
+            Required Stuff:
+          </Typography>
+          <Typography component="h5" variant="body1">
+            Kitchen Table, Cooking Plate
           </Typography>
         </CardContent>
         <div className={classes.controls}>

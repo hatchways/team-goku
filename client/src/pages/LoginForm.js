@@ -3,6 +3,7 @@ import { Grid, Button } from "@material-ui/core";
 import { validateEmail, validatePassword } from "../Validation";
 import { LoginComponent, PasswordComponent } from "./LoginSignupComponents";
 import { makeStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom';
 
 const themes = makeStyles({
     primaryButton: {
@@ -75,7 +76,7 @@ function LoginForm(props) {
                     />
                 </Grid>
                 <Grid item>
-                    <Button className={classes.primaryButton} type="submit">Login</Button>
+                    <Button className={classes.primaryButton} component={Link} to="/user">Login</Button>
                 </Grid>
 
             </form>

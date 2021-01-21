@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { theme } from "./themes/theme";
 import LoginSignup from "./pages/LoginSignup";
+import User from "./pages/User";
 import "./App.css";
 
 function App() {
@@ -16,6 +17,9 @@ function App() {
           </Route>
           <Route path="/login">
             <LoginSignup />
+          </Route>
+          <Route path="/user">
+            <User />
           </Route>
         </Switch>
       </BrowserRouter>

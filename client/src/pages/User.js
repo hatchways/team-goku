@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Box from '@material-ui/core/Box';
 
-import logo from '../images/logo.png';
+import logo2 from '../images/logo2.png';
 
 import Profile from "./Profile";
 
@@ -58,7 +58,7 @@ export default function MenuAppBar() {
       <div>
         <AppBar position="fixed" className={classes.navbar}>
           <Toolbar>
-            <img src={logo} />
+            <img src={logo2} />
             <Typography component="div" className={classes.title}>
               <Box letterSpacing={6} m={1}>
                   CHEF'S MENU

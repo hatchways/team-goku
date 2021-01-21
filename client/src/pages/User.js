@@ -11,6 +11,7 @@ import Box from '@material-ui/core/Box';
 
 import logo from '../images/logo.png';
 
+import Profile from "./Profile";
 
 const useStyles = makeStyles(({
   root: {

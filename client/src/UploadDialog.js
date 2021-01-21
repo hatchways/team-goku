@@ -53,8 +53,6 @@ function UploadDialog(props) {
     var formdata = new FormData();
     formdata.append("image", files[0]);
 
-    console.log(formdata.get("image"));
-
     var requestOptions = {
       method: "POST",
       body: formdata,

@@ -6,6 +6,9 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import RecipeCard from './RecipeCard';
 
 import sushi1 from '../images/sushi1.png';
 import chef from '../images/chef.png';
@@ -55,6 +58,7 @@ const useStyles = makeStyles(theme => ({
     height: '20%',
     background: "#FF510C",
     borderRadius: 0,
+    color: 'white',
   },
   dishes_section: {
     height: '100%',
@@ -64,11 +68,26 @@ const useStyles = makeStyles(theme => ({
     background: '#FFFFFF',
     height: '75%',
     width: '70%',
+    borderRadius: 0,
+    overflow: 'hidden'
   },
   chefs_name: {
     marginTop: '10%',
     marginBottom:'3%',
   },
+  dishes_list: {
+    paddingTop: 0,
+    paddingBottom: 0,
+    position: 'relative',
+    overflow: 'auto',
+    height: '100%',
+    display: 'auto',
+    width: '100%',
+  },
+  dishes_item: {
+    padding: '0px 0px 6px 0px',
+    width: '100%',
+  }
 }));
 
 function Profile(props){
@@ -111,6 +130,15 @@ function Profile(props){
             alignItems="center">
         <Typography variant='h6' align='center' className={classes.chefs_name}>Atsushi's Menu:</Typography>
         <Paper className={classes.dishes}>
+          <List className={classes.dishes_list}>
+            {[0, 1, 2].map((sectionId) => (
+              <li key={`section-${sectionId}`}>
+                    <ListItem key={`item-${sectionId}`} className={classes.dishes_item}>
+                      <RecipeCard />
+                    </ListItem>
+              </li>
+            ))}
+          </List>
         </Paper>
       </Grid>
 

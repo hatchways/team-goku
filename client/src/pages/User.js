@@ -21,6 +21,7 @@ const useStyles = makeStyles(({
   },
   title: {
     flexGrow: 1,
+    marginLeft: '10px'
   },
   navbar: {
     background: "#FFFFFF"
@@ -57,8 +58,12 @@ export default function MenuAppBar() {
       <div>
         <AppBar position="fixed" className={classes.navbar}>
           <Toolbar>
-            <Box className={classes.title}><img src={logo} /></Box>
-
+            <img src={logo} />
+            <Typography component="div" className={classes.title}>
+              <Box letterSpacing={6} m={1}>
+                  CHEF'S MENU
+              </Box>
+            </Typography>
             {auth && (
               <div>
                 <IconButton

@@ -18,19 +18,16 @@ router.route('/new_recipe').post((req, res) => {
 
 
   //Checks for
-  if(name.length == 0){
+  if(!name){
   	res.send("Recipe must have a name");
   }
-  if(ingredients.length == 0){
+  if(!ingredients){
   	res.send("Must list ingredients")
   }
-  if(description.length == 0){
+  if(!description){
     res.send("Recipe must have a description");
   }
-  /*if(chef_id.length == 0){
-  	res.send("Must include chef_id");
-  }*/
-  if(price.length == 0){
+  if(!price){
     res.send("Recipe must have a price");
   }
 
@@ -45,7 +42,7 @@ router.route('/new_recipe').post((req, res) => {
 });
 
 //Retrieve Recipe by id
-router.route('/get_recipe/:id').get((req, res) => {
+router.route('/:id').get((req, res) => {
 	const _id = req.params.id;
 	Recipe.findById( _id ).lean().exec((err, recipe) => {
     if(err) {return res.send(err)};
@@ -54,9 +51,9 @@ router.route('/get_recipe/:id').get((req, res) => {
 });
 
 //Delete Recipe by id
-router.route('/delete_recipe/:id').get((req, res) => {
+router.route('/:id').delete((req, res) => {
   console.log('Request body' + req.body);
-	const _id = req.params.id;
+	const _id = req.body.id;
 	Recipe.findByIdAndDelete( _id, (err, result) => {
     if(err) {return res.send(err)};
     return res.send(result)
@@ -65,7 +62,7 @@ router.route('/delete_recipe/:id').get((req, res) => {
 
 //Update Recipe
 router.route('/update_recipe/:id').post((req, res) => {
-  const _id = req.params.id;
+  const _id = req.body.id;
   console.log('Request body' + req.body);
 	Recipe.findByIdAndUpdate( _id, req.body, { 'new': true })
     .exec((err, result) => {
@@ -75,7 +72,7 @@ router.route('/update_recipe/:id').post((req, res) => {
 });
 
 //Find recipes by chef
-router.route('/get_recipes_by_chef/:chef_id').get((req, res) => {
+router.route('/chef/:chef_id').get((req, res) => {
 	Recipe.find()
     .where('chef').equals(req.params.chef_id)
     .exec((err, result) => {

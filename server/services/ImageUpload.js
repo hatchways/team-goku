@@ -26,9 +26,7 @@ const upload = multer({
     acl: "public-read",
     s3: s3,
     bucket: "gokuchefsmenu",
-    metadata: function (req, file, cb) {
-      cb(null, { fieldName: file.fieldname });
-    },
+    contentType: multerS3.AUTO_CONTENT_TYPE, //so it doesn't set everything to application/octet-stream content type
     key: function (req, file, cb) {
       var fileExt = "";
       if (file.mimetype === "image/jpeg") {

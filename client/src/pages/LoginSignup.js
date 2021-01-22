@@ -98,16 +98,19 @@ function LoginSignup() {
                     justify="flex-start"
                     alignItems="center"
                 >
-                    <Grid item className={classes.logoGrid}> 
+                    <Grid item className={classes.logoGrid}>
                         <img className={classes.logo} src={logo}/>
                     </Grid>
-                    <Grid 
+                    <Grid
                         container
                         direction="column"
                         justify="center"
                         alignItems="center"
                     >
                         <Switch>
+                            <Route path="/">
+                                <LoginForm />
+                            </Route>
                             <Route path="/login">
                                 <LoginForm />
                             </Route>

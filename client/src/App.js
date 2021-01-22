@@ -21,6 +21,9 @@ function App() {
           <Route path="/user">
             <User />
           </Route>
+          <Route path="/">
+            <LoginSignup />
+          </Route>  
         </Switch>
       </BrowserRouter>
     </MuiThemeProvider>

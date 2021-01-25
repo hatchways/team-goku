@@ -18,7 +18,7 @@ router.route('/').post((req, res) => {
   const chef = req.body.chef;
   const servingSize = req.body.servingSize;
   const requiredStuff = req.body.requiredStuff;
-  const imgUrl = req.body.imgUrl;
+  const picture = req.body.picture;
 
 
   //Checks for

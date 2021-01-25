@@ -11,7 +11,7 @@ const recipeSchema = new Schema({
 	chef: { type: Schema.Types.ObjectId, ref: 'User', required: true },
 	servingSize: { type: String, required: true },
 	requiredStuff: { type: String, required: true },
-	imgUrl: { type: String },
+	picture: { type: String },
 
 });
 

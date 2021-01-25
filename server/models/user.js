@@ -11,6 +11,7 @@ const userSchema = new Schema({
 	aboutMe: String,
 	favRecipes: [{ type: Schema.Types.ObjectId, ref: 'Recipe' }],
 	chefRecipes: [{ type: Schema.Types.ObjectId, ref: 'Recipe' }],
+	picture: { type: String },
 
 });
 

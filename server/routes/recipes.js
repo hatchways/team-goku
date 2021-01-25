@@ -36,7 +36,7 @@ router.route('/').post((req, res) => {
   }
 
   //Creates recipe
-  const newRecipe = new Recipe( {_id, name, ingredients, description, price, chef, servingSize, requiredStuff, imgUrl} );
+  const newRecipe = new Recipe( {_id, name, ingredients, description, price, chef, servingSize, requiredStuff, picture} );
 
    //Saves recipe
    newRecipe.save()

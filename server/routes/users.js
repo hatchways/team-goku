@@ -33,11 +33,16 @@ router.route("/").get(verifyToken, (req, res) => {
 router.route("/register").post((req, res) => {
   const _id = new mongoose.Types.ObjectId();
   const name = req.body.name;
+  const location = req.body.location;
   let email = req.body.email;
   var password = req.body.password;
 
   if (name.length == 0) {
     res.send("Invalid Name");
+  }
+
+  if (location.length == 0) {
+    res.send("Invalid Location");
   }
 
   if (!validator.isEmail(email)) {

@@ -1,12 +1,9 @@
 import React from "react";
 import { MuiThemeProvider } from "@material-ui/core";
-import { BrowserRouter, Route } from "react-router-dom";
-import { Switch } from "react-router";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { theme } from "./themes/theme";
-import LandingPage from "./pages/Landing"
-import UserPage from "./pages/User";
-
+import LoginSignup from "./pages/LoginSignup";
 import "./App.css";
 
 function App() {
@@ -14,8 +11,12 @@ function App() {
     <MuiThemeProvider theme={theme}>
       <BrowserRouter>
         <Switch>
-          <Route path="/user" component={UserPage} />
-          <Route path="/" component={LandingPage} />
+          <Route path="/signup">
+            <LoginSignup />
+          </Route>
+          <Route path="/login">
+            <LoginSignup />
+          </Route>
         </Switch>
       </BrowserRouter>
     </MuiThemeProvider>

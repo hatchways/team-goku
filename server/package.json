@@ -2,17 +2,15 @@
   "name": "team-goku",
   "version": "1.0.0",
   "description": "This starter repo will be used for building applications using React, Material-UI, React-Router, Node, & Express.js.",
-  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "dev": "nodemon ./bin/www",
+    "debug": "nodemon  --inspect ./bin/www",
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha --exit --timeout 30000"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hatchways/team-goku.git"
   },
-  "author": "harinder",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/hatchways/team-goku/issues"
   },

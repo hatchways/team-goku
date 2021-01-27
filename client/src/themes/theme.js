@@ -6,6 +6,9 @@ export const theme = createMuiTheme({
   typography: {
     fontFamily: '"Montserrat"',
     fontSize: 12,
+    subtitle1: {
+      color: "#FF510C",
+    },
     h1: {
       // could customize the h1 variant as well
     }

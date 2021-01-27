@@ -62,17 +62,17 @@ export default function MediaControlCard(props) {
   const classes = useStyles();
   const theme = useTheme();
 
-  const [recipeData, setRecipeData] = useState({ data: [] });
+  const [recipeData, setRecipeData] = useState([]);
 
   useEffect(() => {
     fetch("/recipes/chef/" + props.id)
       .then((res) => res.json())
-      .then((data) => setRecipeData({ data: data }));
+      .then((data) => setRecipeData(data));
   }, []);
 
   return (
     <List className={classes.dishesList}>
-      {recipeData.data.map((recipe) => (
+      {recipeData.map((recipe) => (
         <ListItem key={`item-${recipe._id}`} className={classes.dishes_item}>
           <Card className={classes.root}>
             <div className={classes.details}>

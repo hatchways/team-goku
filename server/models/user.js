@@ -10,6 +10,7 @@ const userSchema = new Schema({
   aboutMe: String,
   favRecipes: [{ type: Schema.Types.ObjectId, ref: "Recipe" }],
   picture: { type: String },
+	favCuisines: { type: [String] },
 });
 
 const User = mongoose.model("User", userSchema);

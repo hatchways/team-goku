@@ -1,7 +1,7 @@
-const router = require('express').Router();
-const mongoose = require('mongoose');
+const router = require("express").Router();
+const mongoose = require("mongoose");
 
-let Recipe = require('../models/recipe.js')
+let Recipe = require("../models/recipe.js");
 
 router.route("/").get((req, res) => {
   return res.send("test");
@@ -10,15 +10,15 @@ router.route("/").get((req, res) => {
 //Create Recipe
 router.route("/").post((req, res) => {
   const _id = new mongoose.Types.ObjectId();
-  const name = req.body.name;
-  const ingredients = req.body.ingredients;
-  const description = req.body.description;
-  const price = req.body.price;
-  const chef = req.body.chef;
-  const servingSize = req.body.servingSize;
-  const requiredStuff = req.body.requiredStuff;
-  const picture = req.body.picture;
-
+  const {
+    name,
+    ingredients,
+    description,
+    price,
+    chef,
+    servingSize,
+    picture,
+  } = req.body;
   //Checks for
   if (!name) {
     res.send("Recipe must have a name");

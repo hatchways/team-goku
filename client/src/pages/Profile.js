@@ -75,14 +75,13 @@ const useStyles = makeStyles((theme) => ({
 
 function Profile(props) {
   const classes = useStyles();
-  const [chefData, setChefData] = useState({ data: [] });
-  console.log(props.id);
+  const [chefData, setChefData] = useState([]);
   useEffect(() => {
     fetch("/users/" + props.id)
       .then((res) => res.json())
-      .then((data) => setChefData({ data: data }));
+      .then((data) => setChefData(data));
   }, []);
-  console.log(chefData.data);
+  console.log(chefData);
   return (
     <Grid container className={classes.root}>
       <Paper className={classes.sidebar}>
@@ -94,7 +93,7 @@ function Profile(props) {
           direction="column-reverse"
           alignItems="center"
         >
-          <Avatar src={chef} className={classes.large} />
+          <Avatar src={chefData.picture} className={classes.large} />
         </Grid>
         <Grid
           item
@@ -105,10 +104,10 @@ function Profile(props) {
           alignItems="center"
         >
           <Typography variant="h6" align="center">
-            {chefData.data.name}
+            {chefData.name}
           </Typography>
           <Typography variant="subtitle1" align="center">
-            {chefData.data.location}
+            {chefData.location}
           </Typography>
         </Grid>
         <Divider variant="middle" />
@@ -126,7 +125,7 @@ function Profile(props) {
             lineHeight={2}
             className={classes.chefDescription}
           >
-            {chefData.data.aboutMe}
+            {chefData.aboutMe}
           </Typography>
         </Grid>
         <Button variant="contained" className={classes.srButton} fullWidth>
@@ -143,7 +142,7 @@ function Profile(props) {
         alignItems="center"
       >
         <Typography variant="h6" align="center" className={classes.chefName}>
-          {chefData.data.name + "'s Menu:"}
+          {chefData.name + "'s Menu:"}
         </Typography>
         <Paper className={classes.dishes}>
           <RecipeCard id={props.id} />

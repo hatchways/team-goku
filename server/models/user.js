@@ -6,7 +6,7 @@ const userSchema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   isChef: { type: Boolean, required: true },
-  location: { type: String, required: true },
+  location: { type: String },
   aboutMe: String,
   favRecipes: [{ type: Schema.Types.ObjectId, ref: "Recipe" }],
   picture: { type: String },

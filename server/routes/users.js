@@ -50,6 +50,7 @@ router.route("/register").post((req, res) => {
   const name = req.body.name;
   let email = req.body.email;
   var password = req.body.password;
+  const isChef = false;
   //VALIDATION
   if (name.length == 0) {
     res.send("Invalid Name");
@@ -63,7 +64,7 @@ router.route("/register").post((req, res) => {
   //ENCRYPT PASSWORD
   password = bcrypt.hashSync(req.body.password, 10);
   //CREATE NEW USER
-  const newUser = new User({ _id, name, email, password });
+  const newUser = new User({ _id, name, email, password, isChef });
   //REGISTER NEW USER
   newUser
     .save()

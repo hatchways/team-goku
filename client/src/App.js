@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { theme } from "./themes/theme";
 import LoginSignup from "./pages/LoginSignup";
 import User from "./pages/User";
-import "./App.css";
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
   return (
@@ -18,9 +18,9 @@ function App() {
           <Route path="/login">
             <LoginSignup />
           </Route>
-          <Route path="/user">
+          <PrivateRoute path="/user">
             <User />
-          </Route>
+          </PrivateRoute>
           <Route path="/">
             <LoginSignup />
           </Route>

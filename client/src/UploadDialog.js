@@ -78,16 +78,16 @@ function UploadDialog(props) {
   });
 
   const handleImageUpload = (event) => {
-    var formdata = new FormData();
+    const formdata = new FormData();
     formdata.append("image", files[0]);
 
-    var requestOptions = {
+    const requestOptions = {
       method: "POST",
       body: formdata,
     };
 
     //To do: Need to catch errors properly to alert user in case upload goes wrong
-    fetch("http://localhost:5000/upload/uploadpicture", requestOptions)
+    fetch("http://localhost:3001/upload/uploadpicture", requestOptions)
       .then((response) => response.text())
       .then((result) => console.log(result))
       .catch((error) => console.log("error", error));

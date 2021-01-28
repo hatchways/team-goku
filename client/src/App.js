@@ -5,7 +5,7 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { theme } from "./themes/theme";
 import LoginSignup from "./pages/LoginSignup";
 import User from "./pages/User";
-import "./App.css";
+import UploadDialog from "./UploadDialog";
 
 function App() {
   return (
@@ -21,8 +21,8 @@ function App() {
           <Route path="/user">
             <User />
           </Route>
-          <Route path="/">
-            <LoginSignup />
+          <Route path="/test">
+            <UploadDialog />
           </Route>
         </Switch>
       </BrowserRouter>

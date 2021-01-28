@@ -99,7 +99,7 @@ function SignupForm(props) {
       };
       setOpenSuccessDialog(true);
       setLoading(true);
-      fetch("http://localhost:5000/users/register", requestOptions)
+      fetch("http://localhost:3001/users/register", requestOptions)
         .then((response) => {
           if (response.status == 201) {
             setSignupSuccess(true);

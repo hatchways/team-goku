@@ -4,8 +4,6 @@ const multerS3 = require("multer-s3");
 
 const s3 = new aws.S3();
 
-require("dotenv").config();
-
 aws.config.update({
   secretAccessKey: process.env.S3_ACCESS_SECRET,
   accessKeyId: process.env.S3_ACCESS_KEY,
@@ -14,8 +12,10 @@ aws.config.update({
 
 const fileFilter = (req, file, cb) => {
   if (file.mimetype === "image/jpeg" || file.mimetype === "image/png") {
+    // Accept the file with callback set to true.
     cb(null, true);
   } else {
+    // Although the docs for multer show you can pass errors into express err, it doesn't seem to pass the error
     cb(new Error("Invalid file type, only JPEG and PNG is allowed!"), false);
   }
 };

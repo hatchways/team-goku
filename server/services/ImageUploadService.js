@@ -20,6 +20,7 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
+// By uploading with the key being the id from the upload request, if the same key is being uploaded to, it will replace the old image of the same key.
 const upload = multer({
   fileFilter,
   storage: multerS3({
@@ -28,13 +29,7 @@ const upload = multer({
     bucket: "gokuchefsmenu",
     contentType: multerS3.AUTO_CONTENT_TYPE, //so it doesn't set everything to application/octet-stream content type
     key: function (req, file, cb) {
-      var fileExt = "";
-      if (file.mimetype === "image/jpeg") {
-        fileExt = ".jpeg";
-      } else if (file.mimetype === "image/png") {
-        fileExt = ".png";
-      }
-      cb(null, Date.now().toString() + fileExt);
+      cb(null, req.params.id);
     },
   }),
 });

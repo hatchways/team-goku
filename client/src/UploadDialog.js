@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogActions,
-  Avatar
+  Avatar,
 } from "@material-ui/core";
 import { useDropzone } from "react-dropzone";
 
@@ -29,6 +29,11 @@ const themes = makeStyles((theme) => ({
   },
   avatar: {
     width: theme.spacing(25),
+    height: theme.spacing(25),
+  },
+  image: {
+    display: "block",
+    idth: theme.spacing(25),
     height: theme.spacing(25),
   },
   primaryButton: {
@@ -81,25 +86,36 @@ function UploadDialog(props) {
     const formdata = new FormData();
     formdata.append("image", files[0]);
 
+    const url = new URL("http://localhost:3001/");
+    if (props.avatarUpload) {
+      url.pathname = "upload/profile/" + props.id;
+    }
+    else if (!props.avatarUpload) {
+      url.pathname = "upload/recipe/" + props.id;
+    }
+    else {
+      event.preventDefault();
+      return;
+    }
+
     const requestOptions = {
       method: "POST",
       body: formdata,
     };
-
-    //To do: Need to catch errors properly to alert user in case upload goes wrong
-    fetch("http://localhost:3001/upload/uploadpicture", requestOptions)
-      .then((response) => response.text())
-      .then((result) => console.log(result))
-      .catch((error) => console.log("error", error));
+      //To do: Need to catch errors properly to alert user in case upload goes wrong
+      fetch(url.toString(), requestOptions)
+        .then((response) => response.text())
+        .then((result) => console.log(result))
+        .catch((error) => console.log("error", error));
   };
 
- useEffect(
-   () => () => {
-     // Make sure to revoke the data uris to avoid memory leaks
-     files.forEach((file) => URL.revokeObjectURL(file.preview));
-   },
-   [files]
- );
+  useEffect(
+    () => () => {
+      // Make sure to revoke the data uris to avoid memory leaks
+      files.forEach((file) => URL.revokeObjectURL(file.preview));
+    },
+    [files]
+  );
 
   const classes = themes();
   return (
@@ -116,9 +132,16 @@ function UploadDialog(props) {
         open={open}
         onClose={handleClose}
       >
-        <DialogTitle id="simple-dialog-title">
-          Upload a New Profile Picture
-        </DialogTitle>
+        {props.avatarUpload ? (
+          <DialogTitle id="simple-dialog-title">
+            Upload a New Profile Picture
+          </DialogTitle>
+        ) : (
+          <DialogTitle id="simple-dialog-title">
+            Upload a Recipe Picture
+          </DialogTitle>
+        )}
+
         <form onSubmit={handleImageUpload}>
           <DialogContent>
             <Grid container direction="column" alignItems="center" spacing={2}>
@@ -131,11 +154,18 @@ function UploadDialog(props) {
                 </Button>
               </Grid>
               <Grid item>
-                <Avatar
-                  className={classes.avatar}
-                  src={files.length !== 0 ? files[0].preview : ""}
-                  alt="avatar"
-                />
+                {props.avatarUpload ? (
+                  <Avatar
+                    className={classes.avatar}
+                    src={files.length !== 0 ? files[0].preview : ""}
+                    alt="avatar"
+                  />
+                ) : (
+                  <img
+                    className={classes.image}
+                    src={files.length !== 0 ? files[0].preview : ""}
+                  />
+                )}
               </Grid>
             </Grid>
           </DialogContent>

@@ -21,7 +21,12 @@ function App() {
           <Route path="/user">
             <User />
           </Route>
-          <Route path="/test">
+          <Route path="/testUpload">
+            <UploadDialog id={"600f7fcf1416ea25d0b37b3a"} avatarUpload={true} />
+            <UploadDialog
+              id={"601435b364542988248edb77"}
+              avatarUpload={false}
+            />
             <UploadDialog />
           </Route>
         </Switch>

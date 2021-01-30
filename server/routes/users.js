@@ -50,7 +50,6 @@ router.route("/register").post((req, res) => {
   const name = req.body.name;
   let email = req.body.email;
   var password = req.body.password;
-  const isChef = false;
   //VALIDATION
   if (name.length == 0) {
     res.send("Invalid Name");
@@ -64,7 +63,7 @@ router.route("/register").post((req, res) => {
   //ENCRYPT PASSWORD
   password = bcrypt.hashSync(req.body.password, 10);
   //CREATE NEW USER
-  const newUser = new User({ _id, name, email, password, isChef });
+  const newUser = new User({ _id, name, email, password });
   //REGISTER NEW USER
   newUser
     .save()
@@ -90,14 +89,15 @@ router.route("/login").post((req, res) => {
       //Create JWT accessToken
       const user = { email: req.body.email };
       const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET);
-      res.cookie("token", accessToken, {
-				expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), //thirty days
-				secure: false, // set to true if your using https
-				httpOnly: true,
-				sameSite: true,
-      }).json({user: email});
-    }
-		else {
+      res
+        .cookie("token", accessToken, {
+          expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), //thirty days
+          secure: false, // set to true if your using https
+          httpOnly: true,
+          sameSite: true,
+        })
+        .json({ user: email });
+    } else {
       res.status(401).send("Incorrect login");
     }
   });
@@ -118,10 +118,9 @@ router.route("/:id").get((req, res) => {
 
 //LOGOUT
 router.route("/logout").get((req, res) => {
-	console.log(req.cookies.token);
-	res.clearCookie("token");
-	res.status(200).send("Log out successful.");
+  console.log(req.cookies.token);
+  res.clearCookie("token");
+  res.status(200).send("Log out successful.");
 });
-
 
 module.exports = router;

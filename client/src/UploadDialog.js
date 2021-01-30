@@ -58,14 +58,16 @@ const themes = makeStyles((theme) => ({
 
 function UploadDialog(props) {
   const [files, setFiles] = useState([]);
-  const [open, setOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [messageOpen, setMessageOpen] = useState(false);
+  const [message, setMessage] = useState("");
 
   const handleClickOpen = () => {
-    setOpen(true);
+    setDialogOpen(true);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setDialogOpen(false);
   };
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -83,30 +85,58 @@ function UploadDialog(props) {
   });
 
   const handleImageUpload = (event) => {
+    event.preventDefault();
     const formdata = new FormData();
     formdata.append("image", files[0]);
 
-    const url = new URL("http://localhost:3001/");
-    if (props.avatarUpload) {
-      url.pathname = "upload/profile/" + props.id;
-    }
-    else if (!props.avatarUpload) {
-      url.pathname = "upload/recipe/" + props.id;
+    if (files[0]) {
+      console.log(files[0])
+      //validate image extension
+      const file = formdata.get("image");
+      if (!(file.type === "image/jpeg" || file.type === "image/png")) {
+        setMessageOpen(true);
+        setMessage("Only .jpeg and .png files accepted");
+        return;
+      }
     }
     else {
-      event.preventDefault();
+      setMessageOpen(true);
+      setMessage("Please upload an image");
       return;
     }
 
+    const url = new URL("http://localhost:3001/");
+    if (props.id && props.avatarUpload) {
+      url.pathname = "upload/profile/" + props.id;
+    }
+    else if (props.id && !props.avatarUpload) {
+      url.pathname = "upload/recipe/" + props.id;
+    }
+    else {
+      // dont upload
+      return;
+    }
     const requestOptions = {
       method: "POST",
       body: formdata,
     };
-      //To do: Need to catch errors properly to alert user in case upload goes wrong
       fetch(url.toString(), requestOptions)
-        .then((response) => response.text())
-        .then((result) => console.log(result))
-        .catch((error) => console.log("error", error));
+        .then((response) => { 
+          if (response.status == 200) {
+            //Maybe need to refresh or redirect somewhere.
+            setMessageOpen(true);
+            setMessage("Upload success");
+          }
+          else {
+            setMessageOpen(true);
+            setMessage("Upload failed, please try again later")
+          }
+        })
+        .catch((error) => {
+          console.log("error", error);
+          setMessageOpen(true);
+          setMessage("Upload failed, please try again later");
+        });
   };
 
   useEffect(
@@ -129,7 +159,7 @@ function UploadDialog(props) {
       </Button>
       <Dialog
         aria-labelledby="simple-dialog-title"
-        open={open}
+        open={dialogOpen}
         onClose={handleClose}
       >
         {props.avatarUpload ? (
@@ -144,6 +174,7 @@ function UploadDialog(props) {
 
         <form onSubmit={handleImageUpload}>
           <DialogContent>
+            {messageOpen ? <Typography>{message}</Typography> : <span />}
             <Grid container direction="column" alignItems="center" spacing={2}>
               <Grid item>
                 <Button className={classes.dropzone} {...getRootProps()}>

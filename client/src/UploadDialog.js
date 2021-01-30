@@ -90,7 +90,7 @@ function UploadDialog(props) {
     formdata.append("image", files[0]);
 
     if (files[0]) {
-      console.log(files[0])
+      console.log(files[0]);
       //validate image extension
       const file = formdata.get("image");
       if (!(file.type === "image/jpeg" || file.type === "image/png")) {
@@ -98,8 +98,7 @@ function UploadDialog(props) {
         setMessage("Only .jpeg and .png files accepted");
         return;
       }
-    }
-    else {
+    } else {
       setMessageOpen(true);
       setMessage("Please upload an image");
       return;
@@ -108,11 +107,9 @@ function UploadDialog(props) {
     const url = new URL("http://localhost:3001/");
     if (props.id && props.avatarUpload) {
       url.pathname = "upload/profile/" + props.id;
-    }
-    else if (props.id && !props.avatarUpload) {
+    } else if (props.id && !props.avatarUpload) {
       url.pathname = "upload/recipe/" + props.id;
-    }
-    else {
+    } else {
       // dont upload
       return;
     }
@@ -120,23 +117,22 @@ function UploadDialog(props) {
       method: "POST",
       body: formdata,
     };
-      fetch(url.toString(), requestOptions)
-        .then((response) => { 
-          if (response.status == 200) {
-            //Maybe need to refresh or redirect somewhere.
-            setMessageOpen(true);
-            setMessage("Upload success");
-          }
-          else {
-            setMessageOpen(true);
-            setMessage("Upload failed, please try again later")
-          }
-        })
-        .catch((error) => {
-          console.log("error", error);
+    fetch(url.toString(), requestOptions)
+      .then((response) => {
+        if (response.status == 200) {
+          //Maybe need to refresh or redirect somewhere.
+          setMessageOpen(true);
+          setMessage("Upload success");
+        } else {
           setMessageOpen(true);
           setMessage("Upload failed, please try again later");
-        });
+        }
+      })
+      .catch((error) => {
+        console.log("error", error);
+        setMessageOpen(true);
+        setMessage("Upload failed, please try again later");
+      });
   };
 
   useEffect(

@@ -106,7 +106,7 @@ router.route("/login").post((req, res) => {
 //Retrieve user info by id
 router.route("/:id").get((req, res) => {
   const _id = req.params.id;
-  User.findById(_id)
+  User.findById(_id, "name isChef location aboutMe picture")
     .lean()
     .exec((err, user) => {
       if (err) {
@@ -116,11 +116,23 @@ router.route("/:id").get((req, res) => {
     });
 });
 
+//Update User
+router.route("/update_user/:id").post((req, res) => {
+  const _id = req.body.id;
+  console.log("Request body" + req.body);
+  Recipe.findByIdAndUpdate(_id, req.body, { new: true }).exec((err, result) => {
+    if (err) {
+      return res.send(err);
+    }
+    return res.send(result);
+  });
+
 //LOGOUT
 router.route("/logout").get((req, res) => {
   console.log(req.cookies.token);
   res.clearCookie("token");
   res.status(200).send("Log out successful.");
+
 });
 
 module.exports = router;

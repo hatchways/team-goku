@@ -21,7 +21,12 @@ app.use(json());
 app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(join(__dirname, "public")));
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000",],
+    credentials: true,
+  })
+);
 
 app.use("/", indexRouter);
 app.use("/ping", pingRouter);

@@ -1,11 +1,13 @@
 import React from "react";
 import { MuiThemeProvider } from "@material-ui/core";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import { theme } from "./themes/theme";
 import LoginSignup from "./pages/LoginSignup";
 import User from "./pages/User";
 import UploadDialog from "./UploadDialog";
+import "./App.css";
+import PrivateRoute from "./PrivateRoute";
 
 function App() {
   return (
@@ -18,16 +20,23 @@ function App() {
           <Route path="/login">
             <LoginSignup />
           </Route>
-          <Route path="/user">
+          <PrivateRoute path="/user">
             <User />
-          </Route>
-          <Route path="/testUpload">
+          </PrivateRoute>
+          <PrivateRoute path="/testUpload">
             <UploadDialog id={"600f7fcf1416ea25d0b37b3a"} avatarUpload={true} />
             <UploadDialog
               id={"601435b364542988248edb77"}
               avatarUpload={false}
             />
             <UploadDialog />
+          </PrivateRoute>
+          <Route path="/">
+            <Redirect
+              to={{
+                pathname: "/login",
+              }}
+            />
           </Route>
         </Switch>
       </BrowserRouter>

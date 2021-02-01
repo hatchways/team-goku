@@ -11,6 +11,8 @@ import Box from "@material-ui/core/Box";
 import logo from "../images/logo2.png";
 
 import Profile from "./Profile";
+import { logout } from "../util/LoginLogoutUtils";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -55,6 +57,23 @@ export default function MenuAppBar() {
     setAnchorEl(null);
   };
 
+  const history = useHistory();
+
+  const logoutAction = () => {
+    const requestOptions = {
+      method: "GET",
+      credentials: "include",
+    };
+
+    fetch("http://localhost:3001/users/logout", requestOptions)
+      .then((response) => {
+        logout();
+        history.push("/protected");
+      })
+      .then((result) => console.log(result))
+      .catch((error) => console.log("error", error));
+  };
+
   return (
     <div className={classes.root}>
       <div>
@@ -93,7 +112,7 @@ export default function MenuAppBar() {
                   onClose={handleClose}
                 >
                   <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>Logout</MenuItem>
+                  <MenuItem onClick={logoutAction}>Logout</MenuItem>
                 </Menu>
               </div>
             )}

@@ -76,7 +76,7 @@ router.route("/login").post((req, res) => {
   const email = req.body.email;
   //VALIDATE USER
   if (!validator.isEmail(email)) {
-    res.send("Invalid Email");
+    res.status(401).send("Incorrect login");
   }
   //AUTENTICATE USER
   User.find({ email: req.body.email }, (err, data) => {
@@ -89,12 +89,17 @@ router.route("/login").post((req, res) => {
       //Create JWT accessToken
       const user = { email: req.body.email };
       const accessToken = jwt.sign({ user }, process.env.ACCESS_TOKEN_SECRET);
-      res.json({ accessToken: accessToken });
-    } //if
-    else {
-      // PASSWORDS DON'T MATCH
-      res.send("Password don't match");
-    } //else
+      res
+        .cookie("token", accessToken, {
+          expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), //thirty days
+          secure: false, // set to true if your using https
+          httpOnly: true,
+          sameSite: true,
+        })
+        .json({ user: email });
+    } else {
+      res.status(401).send("Incorrect login");
+    }
   });
 });
 
@@ -109,6 +114,13 @@ router.route("/:id").get((req, res) => {
       }
       return res.end(JSON.stringify(user));
     });
+});
+
+//LOGOUT
+router.route("/logout").get((req, res) => {
+  console.log(req.cookies.token);
+  res.clearCookie("token");
+  res.status(200).send("Log out successful.");
 });
 
 module.exports = router;

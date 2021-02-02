@@ -13,7 +13,7 @@ router.route("/").get((req, res) => {
   const query = Recipe.find({ cuisine: { $in: cuisinesTransformed } });
   query.lean().exec(function (err, recipe) {
     if (err) {
-      res.send(err);
+      res.status(500).send(err);
     }
     res.json(recipe);
   });

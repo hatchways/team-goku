@@ -1,20 +1,22 @@
 const router = require("express").Router();
-const mongoose = require("mongoose");
 
-let User = require("../models/user");
 let Recipe = require("../models/recipe.js");
 
 router.route("/").get((req, res) => {
-    const cuisine = req.query.cuisine;
-    const query = Recipe.find({"cuisine": { $regex: cuisine, $options: 'i' }});
-    query.lean()
-    .exec(function (err, recipe) {
-        if (err) {
-            res.send(err);
-        }
-        res.json(recipe);
-    });
-
+  const cuisines = req.query.cuisine.split(",");
+  const cuisinesTransformed = cuisines.map((cuisine) => {
+    // Remove white space
+    cuisine = cuisine.trim();
+    // Capitallize first letter
+    return cuisine.charAt(0).toUpperCase() + cuisine.slice(1);
+  });
+  const query = Recipe.find({ cuisine: { $in: cuisinesTransformed } });
+  query.lean().exec(function (err, recipe) {
+    if (err) {
+      res.send(err);
+    }
+    res.json(recipe);
+  });
 });
 
 module.exports = router;

@@ -3,10 +3,6 @@ const mongoose = require("mongoose");
 
 let Recipe = require("../models/recipe.js");
 
-router.route("/").get((req, res) => {
-  return res.send("test");
-});
-
 //Create Recipe
 router.route("/").post((req, res) => {
   const _id = new mongoose.Types.ObjectId();

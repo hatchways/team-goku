@@ -126,6 +126,7 @@ router.route("/update_user/:id").post((req, res) => {
     }
     return res.send(result);
   });
+});
 
 //LOGOUT
 router.route("/logout").get((req, res) => {

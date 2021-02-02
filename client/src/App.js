@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { theme } from "./themes/theme";
 import LoginSignup from "./pages/LoginSignup";
 import User from "./pages/User";
+import SearchPage from "./pages/SearchPage";
 import "./App.css";
 import PrivateRoute from "./PrivateRoute";
 
@@ -13,6 +14,9 @@ function App() {
     <MuiThemeProvider theme={theme}>
       <BrowserRouter>
         <Switch>
+          <Route path="/search">
+            <SearchPage />
+          </Route>
           <Route path="/signup">
             <LoginSignup />
           </Route>

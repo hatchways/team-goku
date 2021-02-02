@@ -8,6 +8,7 @@ import User from "./pages/User";
 import UploadDialog from "./UploadDialog";
 import "./App.css";
 import PrivateRoute from "./PrivateRoute";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
               id={"601435b364542988248edb77"}
               avatarUpload={false}
             />
+          </Route>
+          <Route path ="/profile">
+            <UserProfile></UserProfile>
           </Route>
           <Route path="/">
             <Redirect

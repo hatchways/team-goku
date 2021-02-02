@@ -10,6 +10,7 @@ const indexRouter = require("./routes/index");
 const pingRouter = require("./routes/ping");
 const usersRouter = require("./routes/users.js");
 const recipesRouter = require("./routes/recipes.js");
+const searchRouter = require("./routes/search");
 const uploadRouter = require("./routes/imageUpload");
 
 const { json, urlencoded } = express;
@@ -32,6 +33,7 @@ app.use("/", indexRouter);
 app.use("/ping", pingRouter);
 app.use("/users", usersRouter);
 app.use("/recipes", recipesRouter);
+app.use("/search", searchRouter);
 app.use("/upload", uploadRouter);
 
 // catch 404 and forward to error handler

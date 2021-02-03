@@ -45,8 +45,8 @@ function LoginForm(props) {
     event.preventDefault();
     if (validateEmail(email) && validatePassword(password)) {
       const urlencoded = new URLSearchParams();
-      urlencoded.append("email", "email@email.com");
-      urlencoded.append("password", "password");
+      urlencoded.append("email", email);
+      urlencoded.append("password", password);
 
       const requestOptions = {
         method: "POST",

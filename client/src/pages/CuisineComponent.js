@@ -11,8 +11,12 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function StandaloneToggleButton(props) {
-  const [selected, setSelected] = React.useState(false);
+  const [selected, setSelected] = useState(false);
   const classes = useStyles();
+  function handleChange() {
+    props.onChange(props.cuisine);
+  }
+
   return (
     <ToggleButton
       value={props.cuisine}
@@ -20,6 +24,7 @@ export default function StandaloneToggleButton(props) {
       className={classes.root}
       onChange={() => {
         setSelected(!selected);
+        handleChange();
       }}
     >
       {props.cuisine}

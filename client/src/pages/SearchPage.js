@@ -26,6 +26,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import CuisineButton from "./CuisineComponent";
+import ChefSearch from "./ChefSearch";
 
 import sushi1 from "../images/sushi1.png";
 import chef from "../images/chef.png";
@@ -103,16 +104,28 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function constructSearch(searches) {
+  var query = '?'
+  for (cuisine in searches) {
+    recipe.chef
+  }
+}
+
 function SearchPage(props) {
   const classes = useStyles();
   const [chefData, setChefData] = useState([]);
   const [formats, setFormats] = useState(() => ["bold", "italic"]);
+  const [searches, setSearches] = useState([]);
 
   const handleFormat = (event, newFormats) => {
     setFormats(newFormats);
   };
+
+  function handleChange(search) => {
+    setSearches(searches.concat(search));
+  }
   useEffect(() => {
-    fetch("/users/" + "601051ad82257e2c4291b27b")
+    fetch("/search" + "601051ad82257e2c4291b27b")
       .then((res) => res.json())
       .then((data) => setChefData(data));
   }, []);
@@ -170,7 +183,7 @@ function SearchPage(props) {
                 classname={classes.buttonGroup}
               >
                 {cuisines.map((value) => (
-                  <CuisineButton cuisine={value} />
+                  <CuisineButton cuisine={value} onChange={handleChange} />
                 ))}
               </Grid>
             </Grid>
@@ -190,30 +203,8 @@ function SearchPage(props) {
           justify="flex-start"
           alignItems="flex-start"
         >
-          {/* <Grid item xs={12}> */}
           {[0, 1, 2, 3, 4, 5].map((elem) => (
-            <Grid item xs={3} className={classes.cards} key={elem}>
-              <Card className={classes.chefCard}>
-                <Grid item xs container direction="column" alignItems="center">
-                  <Avatar
-                    src={chefData.picture}
-                    className={classes.chefAvatar}
-                  />
-                </Grid>
-                <CardContent>
-                  <Typography variant="h5" gutterBottom>
-                    {chefData.name}
-                  </Typography>
-                  <div className={classes.chefCuisines}>{"Serving Size: "}</div>
-                  <Typography variant="subtitle1" gutterBottom>
-                    {chefData.location}
-                  </Typography>
-                  <Typography variant="body1" gutterBottom>
-                    {chefData.aboutMe}
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
+            <ChefSearch id={"601051ad82257e2c4291b27b"} />
           ))}
         </Grid>
       </Grid>

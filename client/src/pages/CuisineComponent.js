@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import CheckIcon from '@material-ui/icons/Check';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import { makeStyles } from "@material-ui/core/styles";
@@ -14,7 +14,7 @@ export default function StandaloneToggleButton(props) {
   const [selected, setSelected] = useState(false);
   const classes = useStyles();
   function handleChange() {
-    props.onChange(props.cuisine);
+    props.onChange(props.cuisine, selected);
   }
 
   return (

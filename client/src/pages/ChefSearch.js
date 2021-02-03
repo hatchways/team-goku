@@ -26,7 +26,6 @@ import CardHeader from "@material-ui/core/CardHeader";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import CuisineButton from "./CuisineComponent";
-import ChefSearch from "./ChefSearch";
 
 import sushi1 from "../images/sushi1.png";
 import chef from "../images/chef.png";
@@ -49,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
       width: "25ch",
     },
     borderRadius: 0,
-    margin: '10px',
+    margin: "10px",
     borderRadius: 0,
   },
   chefAvatar: {
@@ -64,8 +63,8 @@ const useStyles = makeStyles((theme) => ({
 
   chefHeader: {
     height: "100%",
-    width: '300px',
-    padding: '10px'
+    width: "300px",
+    padding: "10px",
   },
   dishesSection: {
     height: "100%",
@@ -103,125 +102,38 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "2%",
   },
 }));
-
-function constructSearch(searches) {
-  var query = '/search/' + searches[0];
-  for (var i = 1; i < searches.length; i++) {
-    query = query + ',' + searches[i];
-  }
-  return query
-}
-
-function SearchPage(props) {
+export default function ChefSearch(props) {
   const classes = useStyles();
   const [chefData, setChefData] = useState([]);
   const [formats, setFormats] = useState(() => ["bold", "italic"]);
   const [searches, setSearches] = useState([]);
 
-  const cuisines = [
-    "British",
-    "American",
-    "Caribbean",
-    "Chinese",
-    "French",
-    "Greek",
-    "Italian",
-    "Mediterranean",
-    "Mexican",
-    "Morrocan",
-    "Japanese",
-    "Spanish",
-    "Thai",
-    "Turkish",
-    "Vietnamese",
-  ];
-
-  const handleFormat = (event, newFormats) => {
-    setFormats(newFormats);
-  };
-
-  function handleChange(search, selected) {
-    console.log(searches);
-    if (!selected) {
-      setSearches(searches.concat(search));
-    }
-    else {
-      let removed_search = searches.indexOf(search);
-      var new_searched = [...searches.splice(removed_search)];
-
-      setSearches(new_searched);
-    }
-
-  }
   useEffect(() => {
-    fetch(constructSearch(searches))
+    fetch("/users/" + props.id)
       .then((res) => res.json())
-      .then((data) => setChefData(chefData.concat(data)));
+      .then((data) => setChefData(data));
   }, []);
-
-  console.log('Searches: ' + searches);
 
   console.log(chefData);
   return (
-    <Grid container className={classes.root}>
-      <Grid>
-        <Paper className={classes.sidebar}>
-          <Grid
-            item
-            xs
-            className={classes.chefHeader}
-            container
-            direction="column"
-            alignItems="center"
-          >
-            <Grid>
-              <Typography variant="h6" align="left">
-                Location:
-              </Typography>
-              <form
-                noValidate
-                autoComplete="off"
-              >
-                <TextField
-                  id="outlined-basic"
-                  label="Enter your location"
-                  variant="outlined"
-                  className={classes.locationTextField}
-                />
-              </form>
-              <Grid
-                direction="column"
-                alignItems="center"
-                classname={classes.buttonGroup}
-              >
-                {cuisines.map((value) => (
-                  <CuisineButton cuisine={value} onChange={handleChange} />
-                ))}
-              </Grid>
-            </Grid>
-
-
-          </Grid>
-        </Paper>
-      </Grid>
-      <Grid className={classes.dishesSection} container>
-        <Typography variant="h6" className={classes.chefName}>
-          Available Chefs:
-        </Typography>
-        <Grid
-          container
-          spacing={2}
-          direction="row"
-          justify="flex-start"
-          alignItems="flex-start"
-        >
-          {chefData.map((elem) => (
-            <ChefSearch id={elem.chef} />
-          ))}
+    <Grid item xs={3} className={classes.cards} key={props.elem}>
+      <Card className={classes.chefCard}>
+        <Grid item xs container direction="column" alignItems="center">
+          <Avatar src={chefData.picture} className={classes.chefAvatar} />
         </Grid>
-      </Grid>
+        <CardContent>
+          <Typography variant="h5" gutterBottom>
+            {chefData.name}
+          </Typography>
+          <div className={classes.chefCuisines}>{"Serving Size: "}</div>
+          <Typography variant="subtitle1" gutterBottom>
+            {chefData.location}
+          </Typography>
+          <Typography variant="body1" gutterBottom>
+            {chefData.aboutMe}
+          </Typography>
+        </CardContent>
+      </Card>
     </Grid>
   );
 }
-
-export default SearchPage;

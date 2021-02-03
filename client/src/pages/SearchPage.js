@@ -22,8 +22,10 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
+import CardHeader from "@material-ui/core/CardHeader";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import CuisineButton from "./CuisineComponent";
 
 import sushi1 from "../images/sushi1.png";
 import chef from "../images/chef.png";
@@ -33,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100vh",
     flex: 1,
     background: "#F8F8FF",
+    overflow: "hidden",
   },
   sidebar: {
     width: 300,
@@ -42,41 +45,41 @@ const useStyles = makeStyles((theme) => ({
   },
   locationTextField: {
     "& > *": {
-      margin: theme.spacing(1),
       width: "25ch",
     },
     borderRadius: 0,
+    margin: '10px',
+    borderRadius: 0,
+  },
+  chefAvatar: {
+    width: theme.spacing(15),
+    height: theme.spacing(15),
+    borderWidth: 4,
+    borderColor: "white",
+    borderStyle: "solid",
+    marginBottom: "3%",
+    marginTop: "10%",
   },
 
   chefHeader: {
-    height: "10%",
-  },
-  chefBio: {
-    height: "25%",
+    height: "100%",
+    width: '300px',
+    padding: '10px'
   },
   dishesSection: {
     height: "100%",
     width: "70%",
     marginLeft: "5%",
-  },
-  dishes: {
-    background: "#FFFFFF",
-    height: "75%",
-    width: "70%",
-    borderRadius: 0,
-    overflow: "hidden",
+    overflow: "auto",
   },
   chefName: {
-    marginTop: "10%",
+    marginTop: "5%",
     marginBottom: "3%",
     float: "left",
   },
   buttonGroup: {
-    marginTop: "30px",
-  },
-  paper: {
-    height: 500,
-    width: 400,
+    marginTop: "5%",
+    padding: theme.spacing(6),
   },
   chefList: {
     overflow: "auto",
@@ -84,12 +87,26 @@ const useStyles = makeStyles((theme) => ({
     display: "auto",
     width: "100%",
   },
+  chefCard: {
+    textAlign: "center",
+    alignItems: "center",
+  },
+  cards: {
+    marginRight: "1%",
+  },
+  chefCuisines: {
+    ...theme.typography.button,
+    backgroundColor: "#FF743D",
+    color: "white",
+    padding: theme.spacing(1),
+    marginBottom: "2%",
+  },
 }));
 
 function SearchPage(props) {
   const classes = useStyles();
   const [chefData, setChefData] = useState([]);
-  const [formats, setFormats] = React.useState(() => ["bold", "italic"]);
+  const [formats, setFormats] = useState(() => ["bold", "italic"]);
 
   const handleFormat = (event, newFormats) => {
     setFormats(newFormats);
@@ -99,6 +116,26 @@ function SearchPage(props) {
       .then((res) => res.json())
       .then((data) => setChefData(data));
   }, []);
+
+  const cuisines = [
+    "All",
+    "British",
+    "American",
+    "Caribbean",
+    "Chinese",
+    "French",
+    "Greek",
+    "Italian",
+    "Mediterranean",
+    "Mexican",
+    "Morrocan",
+    "Japanese",
+    "Spanish",
+    "Thai",
+    "Turkish",
+    "Vietnamese",
+  ];
+
   console.log(chefData);
   return (
     <Grid container className={classes.root}>
@@ -117,7 +154,6 @@ function SearchPage(props) {
                 Location:
               </Typography>
               <form
-                className={classes.locationTextField}
                 noValidate
                 autoComplete="off"
               >
@@ -125,46 +161,61 @@ function SearchPage(props) {
                   id="outlined-basic"
                   label="Enter your location"
                   variant="outlined"
+                  className={classes.locationTextField}
                 />
               </form>
-            </Grid>
-          </Grid>
-          <Grid
-            className={classes.chefBio}
-            container
-            direction="column"
-            alignItems="center"
-          >
-            <Grid direction="column" alignItems="center">
-              <ToggleButtonGroup
-                value={formats}
-                onChange={handleFormat}
-                aria-label="text formatting"
-                className={classes.buttonGroup}
+              <Grid
+                direction="column"
+                alignItems="center"
+                classname={classes.buttonGroup}
               >
-                {[0, 1, 2, 3].map((value) => (
-                  <ToggleButton value="bold" aria-label="bold">
-                    Cuisine
-                  </ToggleButton>
+                {cuisines.map((value) => (
+                  <CuisineButton cuisine={value} />
                 ))}
-              </ToggleButtonGroup>
+              </Grid>
             </Grid>
+
+
           </Grid>
         </Paper>
       </Grid>
       <Grid className={classes.dishesSection} container>
-        <Grid>
-          <Typography variant="h6" className={classes.chefName}>
-            Available Chefs:
-          </Typography>
-        </Grid>
-        <List className={classes.chefList}>
-          {[0, 1, 2].map((value) => (
-            <Grid key={value} item>
-              <Paper className={classes.paper} />
+        <Typography variant="h6" className={classes.chefName}>
+          Available Chefs:
+        </Typography>
+        <Grid
+          container
+          spacing={2}
+          direction="row"
+          justify="flex-start"
+          alignItems="flex-start"
+        >
+          {/* <Grid item xs={12}> */}
+          {[0, 1, 2, 3, 4, 5].map((elem) => (
+            <Grid item xs={3} className={classes.cards} key={elem}>
+              <Card className={classes.chefCard}>
+                <Grid item xs container direction="column" alignItems="center">
+                  <Avatar
+                    src={chefData.picture}
+                    className={classes.chefAvatar}
+                  />
+                </Grid>
+                <CardContent>
+                  <Typography variant="h5" gutterBottom>
+                    {chefData.name}
+                  </Typography>
+                  <div className={classes.chefCuisines}>{"Serving Size: "}</div>
+                  <Typography variant="subtitle1" gutterBottom>
+                    {chefData.location}
+                  </Typography>
+                  <Typography variant="body1" gutterBottom>
+                    {chefData.aboutMe}
+                  </Typography>
+                </CardContent>
+              </Card>
             </Grid>
           ))}
-        </List>
+        </Grid>
       </Grid>
     </Grid>
   );

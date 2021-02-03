@@ -96,7 +96,7 @@ router.route("/login").post((req, res) => {
           httpOnly: true,
           sameSite: true,
         })
-        .json({ user: email });
+        .json({ id: data[0]._id });
     } else {
       res.status(401).send("Incorrect login");
     }
@@ -106,7 +106,7 @@ router.route("/login").post((req, res) => {
 //Retrieve user info by id
 router.route("/:id").get((req, res) => {
   const _id = req.params.id;
-  User.findById(_id, "name isChef location aboutMe picture")
+  User.findById(_id, "name isChef location aboutMe picture favCuisines")
     .lean()
     .exec((err, user) => {
       if (err) {

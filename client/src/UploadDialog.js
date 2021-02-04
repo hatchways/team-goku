@@ -58,17 +58,9 @@ const themes = makeStyles((theme) => ({
 
 function UploadDialog(props) {
   const [files, setFiles] = useState([]);
-  const [dialogOpen, setDialogOpen] = useState(false);
   const [messageOpen, setMessageOpen] = useState(false);
   const [message, setMessage] = useState("");
 
-  const handleClickOpen = () => {
-    setDialogOpen(true);
-  };
-
-  const handleClose = () => {
-    setDialogOpen(false);
-  };
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: "image/jpeg, image/png",
@@ -105,6 +97,7 @@ function UploadDialog(props) {
     }
 
     const url = new URL("http://localhost:3001/");
+    console.log("id " + props.id);
     if (props.id && props.avatarUpload) {
       url.pathname = "upload/profile/" + props.id;
     } else if (props.id && !props.avatarUpload) {
@@ -123,6 +116,7 @@ function UploadDialog(props) {
           //Maybe need to refresh or redirect somewhere.
           setMessageOpen(true);
           setMessage("Upload success");
+          window.location.reload();
         } else {
           setMessageOpen(true);
           setMessage("Upload failed, please try again later");
@@ -145,68 +139,62 @@ function UploadDialog(props) {
 
   const classes = themes();
   return (
-    <Grid>
-      <Button
-        variant="outlined"
-        className={classes.button}
-        onClick={handleClickOpen}
-      >
-        Open
-      </Button>
-      <Dialog
-        aria-labelledby="simple-dialog-title"
-        open={dialogOpen}
-        onClose={handleClose}
-      >
-        {props.avatarUpload ? (
-          <DialogTitle id="simple-dialog-title">
-            Upload a New Profile Picture
-          </DialogTitle>
-        ) : (
-          <DialogTitle id="simple-dialog-title">
-            Upload a Recipe Picture
-          </DialogTitle>
-        )}
+    <Dialog
+      aria-labelledby="simple-dialog-title"
+      open={props.open}
+      onClose={props.onClose}
+    >
+      {props.avatarUpload ? (
+        <DialogTitle id="simple-dialog-title">
+          Upload a New Profile Picture
+        </DialogTitle>
+      ) : (
+        <DialogTitle id="simple-dialog-title">
+          Upload a Recipe Picture
+        </DialogTitle>
+      )}
 
-        <form onSubmit={handleImageUpload}>
-          <DialogContent>
-            {messageOpen ? <Typography>{message}</Typography> : <span />}
-            <Grid container direction="column" alignItems="center" spacing={2}>
-              <Grid item>
-                <Button className={classes.dropzone} {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <Typography className={classes.dropzoneText}>
-                    Drop an image here or click to select an image
-                  </Typography>
-                </Button>
-              </Grid>
-              <Grid item>
-                {props.avatarUpload ? (
-                  <Avatar
-                    className={classes.avatar}
-                    src={files.length !== 0 ? files[0].preview : ""}
-                    alt="avatar"
-                  />
-                ) : (
-                  <img
-                    className={classes.image}
-                    src={files.length !== 0 ? files[0].preview : ""}
-                  />
-                )}
-              </Grid>
+      <form onSubmit={handleImageUpload}>
+        <DialogContent>
+          {messageOpen ? <Typography>{message}</Typography> : <span />}
+          <Grid container direction="column" alignItems="center" spacing={2}>
+            <Grid item>
+              <Button className={classes.dropzone} {...getRootProps()}>
+                <input {...getInputProps()} />
+                <Typography className={classes.dropzoneText}>
+                  Drop an image here or click to select an image
+                </Typography>
+              </Button>
             </Grid>
-          </DialogContent>
-          <DialogActions>
-            <Button className={classes.secondaryButton} onClick={handleClose}>
-              Cancel
-            </Button>
-            <Button className={classes.primaryButton} type="submit">
-              Upload
-            </Button>
-          </DialogActions>
-        </form>
-      </Dialog>
-    </Grid>
+            <Grid item>
+              {props.avatarUpload ? (
+                <Avatar
+                  className={classes.avatar}
+                  src={files.length !== 0 ? files[0].preview : ""}
+                  alt="avatar"
+                />
+              ) : (
+                <img
+                  className={classes.image}
+                  src={files.length !== 0 ? files[0].preview : ""}
+                />
+              )}
+            </Grid>
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            className={classes.secondaryButton}
+            onClick={props.onClose}
+          >
+            Cancel
+          </Button>
+          <Button className={classes.primaryButton} type="submit">
+            Upload
+          </Button>
+        </DialogActions>
+      </form>
+    </Dialog>
   );
 }
 

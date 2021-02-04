@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Grid, Avatar, Button, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { getLogin } from "../util/LoginLogoutUtils";
+import UploadDialog from "../UploadDialog";
 
 const themes = makeStyles((theme) => ({
   root: {
@@ -51,6 +52,8 @@ function UserProfile() {
 
   const [user, setUser] = useState([]);
   const [userFavCuisines, setUserFavCuisines] = useState(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   useEffect(() => {
     fetch("/users/" + getLogin())
       .then((res) => res.json()) //should check if response status code 200 else return error
@@ -58,15 +61,29 @@ function UserProfile() {
         setUser(data);
       });
   }, []);
+  
+  console.log(user);
 
   useEffect(() => {
     if (user.favCuisines) {
       const fav = user.favCuisines.map((cuisine) => {
-        return <Grid item className={classes.cuisine}>{cuisine}</Grid>;
+        return (
+          <Grid item className={classes.cuisine}>
+            {cuisine}
+          </Grid>
+        );
       });
       setUserFavCuisines(fav);
     }
   }, [user]);
+
+  const handleClickOpen = () => {
+    setDialogOpen(true);
+  };
+
+  const handleClose = () => {
+    setDialogOpen(false);
+  };
 
   return (
     <Grid>
@@ -79,7 +96,9 @@ function UserProfile() {
             alignItems="center"
           >
             <Grid item>
-              <Avatar className={classes.avatar} src={user.picture}></Avatar>
+              <Button onClick={handleClickOpen}>
+                <Avatar className={classes.avatar} src={user.picture}></Avatar>
+              </Button>
             </Grid>
             <Grid item>
               <Typography className={classes.name}>{user.name}</Typography>
@@ -120,6 +139,12 @@ function UserProfile() {
         </Grid>
       </Grid>
       <Grid>map here</Grid>
+      <UploadDialog
+        open={dialogOpen}
+        onClose={handleClose}
+        id={user._id}
+        avatarUpload={true}
+      ></UploadDialog>
     </Grid>
   );
 }

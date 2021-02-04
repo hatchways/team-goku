@@ -5,7 +5,6 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { theme } from "./themes/theme";
 import LoginSignup from "./pages/LoginSignup";
 import User from "./pages/User";
-import UploadDialog from "./UploadDialog";
 import "./App.css";
 import PrivateRoute from "./PrivateRoute";
 import UserProfile from "./pages/UserProfile";

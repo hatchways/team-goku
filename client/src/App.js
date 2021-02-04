@@ -24,16 +24,9 @@ function App() {
           <PrivateRoute path="/user">
             <User />
           </PrivateRoute>
-          <Route path="/testUpload">
-            <UploadDialog id={"600f7fcf1416ea25d0b37b3a"} avatarUpload={true} />
-            <UploadDialog
-              id={"601435b364542988248edb77"}
-              avatarUpload={false}
-            />
-          </Route>
-          <Route path ="/profile">
+          <PrivateRoute path="/profile">
             <UserProfile></UserProfile>
-          </Route>
+          </PrivateRoute>
           <Route path="/">
             <Redirect
               to={{

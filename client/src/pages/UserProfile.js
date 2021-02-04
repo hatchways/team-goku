@@ -3,6 +3,9 @@ import { Grid, Avatar, Button, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { getLogin } from "../util/LoginLogoutUtils";
 import UploadDialog from "../UploadDialog";
+import {
+  useLocation
+} from "react-router-dom";
 
 const themes = makeStyles((theme) => ({
   root: {
@@ -49,12 +52,16 @@ const themes = makeStyles((theme) => ({
 
 function UserProfile() {
   const classes = themes();
+  const location = useLocation();
+  console.log(location.pathname);
 
   const [user, setUser] = useState([]);
   const [userFavCuisines, setUserFavCuisines] = useState(null);
   const [dialogOpen, setDialogOpen] = useState(false);
 
   useEffect(() => {
+    //if id passed in fetch using props.id //check if editable
+    //else fetch from login assuming that this component is the user's own profile
     fetch("/users/" + getLogin())
       .then((res) => res.json()) //should check if response status code 200 else return error
       .then((data) => {
@@ -85,6 +92,10 @@ function UserProfile() {
     setDialogOpen(false);
   };
 
+  const becomeChef = () => {
+
+  };
+
   return (
     <Grid>
       <Grid container spacing={2}>
@@ -109,9 +120,13 @@ function UserProfile() {
               </Typography>
             </Grid>
             <Grid item>
-              <Button className={classes.sendMessageButton}>
-                Send message
-              </Button>
+              {location.pathname.indexOf(user._id) > 0 ? (
+                <Button>Become Chef</Button>
+              ) : (
+                <Button className={classes.sendMessageButton}>
+                  Send message
+                </Button>
+              )}
             </Grid>
           </Grid>
         </Grid>

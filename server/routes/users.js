@@ -118,9 +118,9 @@ router.route("/:id").get((req, res) => {
 
 //Update User
 router.route("/update_user/:id").post((req, res) => {
-  const _id = req.body.id;
+  const _id = req.params.id;
   console.log("Request body" + req.body);
-  Recipe.findByIdAndUpdate(_id, req.body, { new: true }).exec((err, result) => {
+  User.findByIdAndUpdate(_id, req.body, { new: true }).exec((err, result) => {
     if (err) {
       return res.send(err);
     }

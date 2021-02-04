@@ -58,9 +58,9 @@ function LoginForm(props) {
         .then((response) => {
           if (response.status == 200) {
             response.json().then((body) => {
-              const user = body.user;
-              login(user);
-              history.push("/user");
+              const id = body.id;
+              login(id);
+              history.push("/profile");
             });
           } else if (response.status === 401) {
             console.log(response);

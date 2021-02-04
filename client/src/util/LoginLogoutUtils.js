@@ -12,6 +12,12 @@ export const isLogin = () => {
   if (localStorage.getItem(KEY)) {
     return true;
   }
-
   return false;
+};
+
+export const getLogin = () => {
+  if (isLogin()) {
+    return localStorage.getItem(KEY);
+  }
+  return null;
 };

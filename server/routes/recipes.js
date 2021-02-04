@@ -13,7 +13,9 @@ router.route("/").post((req, res) => {
     price,
     chef,
     servingSize,
+    requiredStuff,
     picture,
+    cuisine,
   } = req.body;
   //Checks for
   if (!name) {
@@ -28,7 +30,6 @@ router.route("/").post((req, res) => {
   if (!price) {
     res.send("Recipe must have a price");
   }
-
   //Creates recipe
   const newRecipe = new Recipe({
     _id,
@@ -40,6 +41,7 @@ router.route("/").post((req, res) => {
     servingSize,
     requiredStuff,
     picture,
+    cuisine,
   });
 
   //Saves recipe

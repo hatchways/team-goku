@@ -229,6 +229,7 @@ function SearchPage(props) {
           justify="flex-start"
           alignItems="flex-start"
         >
+          
           {recipeData.map((elem) => (
             <ChefSearch id={elem.chef} />
           ))}

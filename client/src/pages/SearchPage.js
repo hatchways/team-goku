@@ -25,6 +25,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import CardHeader from "@material-ui/core/CardHeader";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import Switch from "@material-ui/core/Switch";
 import CuisineButton from "./CuisineComponent";
 import ChefSearch from "./ChefSearch";
 
@@ -49,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
       width: "25ch",
     },
     borderRadius: 0,
-    margin: '10px',
+    margin: "10px",
     borderRadius: 0,
   },
   chefAvatar: {
@@ -64,8 +65,8 @@ const useStyles = makeStyles((theme) => ({
 
   chefHeader: {
     height: "100%",
-    width: '300px',
-    padding: '10px'
+    width: "300px",
+    padding: "10px",
   },
   dishesSection: {
     height: "100%",
@@ -105,18 +106,32 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function constructSearch(searches) {
-  var query = '/search/' + searches[0];
+  var query = "/search/" + searches[0];
   for (var i = 1; i < searches.length; i++) {
-    query = query + ',' + searches[i];
+    query = query + "," + searches[i];
   }
-  return query
+  return query;
+}
+
+function changeButtonStates(buttonStates, cuisine, selected) {
+  if (selected) {
+    buttonStates.push(cuisine);
+  } else {
+    const index = buttonStates.indexOf(cuisine);
+    if (index > -1) {
+      buttonStates.splice(index, 1);
+    }
+  }
+  return buttonStates;
 }
 
 function SearchPage(props) {
   const classes = useStyles();
-  const [chefData, setChefData] = useState([]);
+  const [recipeData, setrecipeData] = useState([]);
   const [formats, setFormats] = useState(() => ["bold", "italic"]);
   const [searches, setSearches] = useState([]);
+  const [searchType, setSearchType] = useState({ chefs: true });
+  var buttonStates = [];
 
   const cuisines = [
     "British",
@@ -136,32 +151,22 @@ function SearchPage(props) {
     "Vietnamese",
   ];
 
-  const handleFormat = (event, newFormats) => {
-    setFormats(newFormats);
+  const handleChange = (event) => {
+    setSearchType({ ...searchType, [event.target.name]: event.target.checked });
   };
 
-  function handleChange(search, selected) {
-    console.log(searches);
-    if (!selected) {
-      setSearches(searches.concat(search));
-    }
-    else {
-      let removed_search = searches.indexOf(search);
-      var new_searched = [...searches.splice(removed_search)];
-
-      setSearches(new_searched);
-    }
-
+  function handleSearchChange(search, selected) {
+    let searchesCopy = JSON.parse(JSON.stringify(searches));
+    buttonStates = changeButtonStates(searchesCopy, search, selected);
+    setSearches(buttonStates);
   }
   useEffect(() => {
     fetch(constructSearch(searches))
       .then((res) => res.json())
-      .then((data) => setChefData(chefData.concat(data)));
-  }, []);
+      .then((data) => setrecipeData(data));
+  }, [searches]);
 
-  console.log('Searches: ' + searches);
-
-  console.log(chefData);
+  console.log(recipeData);
   return (
     <Grid container className={classes.root}>
       <Grid>
@@ -174,14 +179,22 @@ function SearchPage(props) {
             direction="column"
             alignItems="center"
           >
+            <Grid component="label" container alignItems="center" spacing={1}>
+              <Grid item>Chefs</Grid>
+              <Grid item>
+                <Switch
+                  checked={searchType.checked} // relevant state for your case
+                  onChange={handleChange} // relevant method to handle your change
+                  value="checked" // some value you need
+                />
+              </Grid>
+              <Grid item>Recipes</Grid>
+            </Grid>
             <Grid>
               <Typography variant="h6" align="left">
                 Location:
               </Typography>
-              <form
-                noValidate
-                autoComplete="off"
-              >
+              <form noValidate autoComplete="off">
                 <TextField
                   id="outlined-basic"
                   label="Enter your location"
@@ -195,12 +208,13 @@ function SearchPage(props) {
                 classname={classes.buttonGroup}
               >
                 {cuisines.map((value) => (
-                  <CuisineButton cuisine={value} onChange={handleChange} />
+                  <CuisineButton
+                    cuisine={value}
+                    onChange={handleSearchChange}
+                  />
                 ))}
               </Grid>
             </Grid>
-
-
           </Grid>
         </Paper>
       </Grid>
@@ -215,7 +229,7 @@ function SearchPage(props) {
           justify="flex-start"
           alignItems="flex-start"
         >
-          {chefData.map((elem) => (
+          {recipeData.map((elem) => (
             <ChefSearch id={elem.chef} />
           ))}
         </Grid>

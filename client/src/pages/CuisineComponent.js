@@ -14,7 +14,7 @@ export default function StandaloneToggleButton(props) {
   const [selected, setSelected] = useState(false);
   const classes = useStyles();
   function handleChange() {
-    props.onChange(props.cuisine, selected);
+    props.onChange(props.cuisine, !selected);
   }
 
   return (

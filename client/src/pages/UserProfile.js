@@ -96,6 +96,8 @@ function UserProfile() {
 
   };
 
+  console.log(location.pathname.indexOf(user._id));
+
   return (
     <Grid>
       <Grid container spacing={2}>
@@ -107,9 +109,16 @@ function UserProfile() {
             alignItems="center"
           >
             <Grid item>
-              <Button onClick={handleClickOpen}>
+              {location.pathname.indexOf(user._id) > 0 ? (
                 <Avatar className={classes.avatar} src={user.picture}></Avatar>
-              </Button>
+              ) : (
+                <Button onClick={handleClickOpen}>
+                  <Avatar
+                    className={classes.avatar}
+                    src={user.picture}
+                  ></Avatar>
+                </Button>
+              )}
             </Grid>
             <Grid item>
               <Typography className={classes.name}>{user.name}</Typography>
@@ -121,11 +130,11 @@ function UserProfile() {
             </Grid>
             <Grid item>
               {location.pathname.indexOf(user._id) > 0 ? (
-                <Button>Become Chef</Button>
-              ) : (
                 <Button className={classes.sendMessageButton}>
                   Send message
                 </Button>
+              ) : (
+                <Button>Become Chef</Button>
               )}
             </Grid>
           </Grid>

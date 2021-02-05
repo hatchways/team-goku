@@ -4,10 +4,9 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import { theme } from "./themes/theme";
 import LoginSignup from "./pages/LoginSignup";
-import User from "./pages/User";
+import NavBar from "./pages/NavBar";
 import "./App.css";
 import PrivateRoute from "./PrivateRoute";
-import UserProfile from "./pages/UserProfile";
 
 function App() {
   return (
@@ -20,16 +19,13 @@ function App() {
           <Route path="/login">
             <LoginSignup />
           </Route>
-          <PrivateRoute path="/user">
-            <User />
-          </PrivateRoute>
-          <PrivateRoute path="/profile">
-            <UserProfile></UserProfile>
+          <PrivateRoute path={["/search", "/profile"]}>
+            <NavBar></NavBar>
           </PrivateRoute>
           <Route path="/">
             <Redirect
               to={{
-                pathname: "/login",
+                pathname: "/search",
               }}
             />
           </Route>
